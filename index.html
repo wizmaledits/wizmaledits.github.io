@@ -1,153 +1,423 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WIZMALEDITS</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WIZMALEDITS</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-<style>
+    body {
+      background: #05030a;
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
 
-body{
-background:black;
-color:white;
-font-family:Arial;
-text-align:center;
-margin:0;
-overflow-x:hidden;
-}
+    .neon-bg {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 25%, rgba(255, 0, 170, 0.35), transparent 28%),
+        radial-gradient(circle at 85% 30%, rgba(0, 255, 255, 0.22), transparent 30%),
+        radial-gradient(circle at 70% 80%, rgba(140, 0, 255, 0.25), transparent 28%),
+        linear-gradient(135deg, #090011 0%, #04060f 50%, #02161a 100%);
+      animation: movebg 10s ease-in-out infinite alternate;
+      z-index: -3;
+    }
 
-.neon-bg{
-position:fixed;
-width:100%;
-height:100%;
-top:0;
-left:0;
-background: radial-gradient(circle at 20% 30%, #ff00ff55, transparent 40%),
-radial-gradient(circle at 80% 70%, #00ffff55, transparent 40%),
-radial-gradient(circle at 50% 90%, #9900ff55, transparent 40%);
-animation:movebg 10s infinite alternate;
-z-index:-1;
-}
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 34px 34px;
+      opacity: 0.15;
+      z-index: -2;
+      pointer-events: none;
+    }
 
-@keyframes movebg{
-0%{transform:translate(0,0);}
-100%{transform:translate(-50px,-50px);}
-}
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 25%, rgba(0,0,0,0.45) 100%);
+      z-index: -1;
+      pointer-events: none;
+    }
 
-.pfp{
-width:160px;
-height:160px;
-border-radius:50%;
-border:4px solid #ff00ff;
-box-shadow:0 0 20px #ff00ff,0 0 40px #00ffff;
-margin-top:40px;
-}
+    @keyframes movebg {
+      0% {
+        transform: translate(0, 0) scale(1);
+        filter: hue-rotate(0deg);
+      }
+      100% {
+        transform: translate(-25px, -20px) scale(1.05);
+        filter: hue-rotate(18deg);
+      }
+    }
 
-h1{
-font-size:40px;
-text-shadow:0 0 10px #ff00ff,0 0 20px #00ffff;
-}
+    .container {
+      width: min(1000px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 32px 0 50px;
+    }
 
-.bio{
-margin-top:10px;
-line-height:1.6;
-}
+    .hero {
+      padding: 30px 20px 20px;
+    }
 
-.social{
-display:inline-block;
-margin:20px;
-padding:20px;
-border-radius:15px;
-background:#111;
-box-shadow:0 0 20px #ff00ff55;
-transition:.3s;
-text-decoration:none;
-color:white;
-width:200px;
-}
+    .pfp-wrap {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      padding: 5px;
+      background: conic-gradient(#ff00c8, #00f7ff, #8a2eff, #ff00c8);
+      box-shadow:
+        0 0 25px rgba(255, 0, 200, 0.7),
+        0 0 55px rgba(0, 247, 255, 0.35);
+      animation: spinGlow 6s linear infinite;
+    }
 
-.social:hover{
-transform:scale(1.05);
-box-shadow:0 0 30px #00ffff;
-}
+    .pfp {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      background: #000;
+      border: 4px solid rgba(0, 0, 0, 0.9);
+    }
 
-.social img{
-width:60px;
-}
+    @keyframes spinGlow {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
 
-.buttons button{
-margin:10px;
-padding:12px 25px;
-border:none;
-border-radius:25px;
-background:#ff00ff;
-color:white;
-cursor:pointer;
-box-shadow:0 0 10px #ff00ff;
-}
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-shadow:
+        0 0 8px rgba(255,255,255,0.95),
+        0 0 18px rgba(255,0,200,0.8),
+        0 0 35px rgba(0,255,255,0.35);
+      margin-bottom: 18px;
+    }
 
-.info{
-margin-top:20px;
-padding:20px;
-}
+    .bio {
+      max-width: 760px;
+      margin: 0 auto 28px;
+      display: grid;
+      gap: 12px;
+    }
 
-</style>
+    .bio-main {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 0 0 14px rgba(255, 0, 200, 0.35);
+    }
+
+    .bio-soft {
+      font-size: 1.15rem;
+      color: #e8dcff;
+      opacity: 0.95;
+    }
+
+    .bio-tag {
+      font-size: 0.98rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #79f7ff;
+      text-shadow: 0 0 12px rgba(0, 255, 255, 0.35);
+    }
+
+    .social-wrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+      margin: 12px auto 30px;
+    }
+
+    .social {
+      position: relative;
+      display: block;
+      text-decoration: none;
+      color: white;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      padding: 26px 20px;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 24px rgba(255, 0, 200, 0.08);
+    }
+
+    .social:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(255,255,255,0.28);
+      box-shadow:
+        0 0 28px rgba(255, 0, 200, 0.18),
+        0 0 40px rgba(0, 255, 255, 0.12);
+    }
+
+    .social::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 45%, transparent);
+      pointer-events: none;
+    }
+
+    .social-icon {
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 16px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      box-shadow: 0 0 20px rgba(255,255,255,0.08);
+    }
+
+    .social-icon svg {
+      width: 42px;
+      height: 42px;
+      display: block;
+    }
+
+    .tiktok-icon {
+      background: linear-gradient(135deg, rgba(255,0,170,0.24), rgba(0,255,255,0.18));
+      color: #ffffff;
+    }
+
+    .discord-icon {
+      background: linear-gradient(135deg, rgba(120,100,255,0.30), rgba(0,255,255,0.16));
+      color: #ffffff;
+    }
+
+    .social h3 {
+      font-size: 1.45rem;
+      margin-bottom: 8px;
+      text-shadow: 0 0 12px rgba(255, 0, 200, 0.22);
+    }
+
+    .social p {
+      color: #dfd5ff;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .buttons button {
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: white;
+      padding: 13px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: 0.2s ease;
+      box-shadow: 0 0 15px rgba(255, 0, 200, 0.10);
+    }
+
+    .buttons button:hover,
+    .buttons button.active {
+      transform: translateY(-2px);
+      background: linear-gradient(90deg, rgba(255,0,170,0.28), rgba(0,255,255,0.18));
+      box-shadow:
+        0 0 20px rgba(255,0,170,0.22),
+        0 0 24px rgba(0,255,255,0.14);
+    }
+
+    .info {
+      max-width: 850px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 26px;
+      padding: 28px 22px;
+      line-height: 1.8;
+      color: #f3edff;
+      box-shadow: 0 0 25px rgba(138, 46, 255, 0.10);
+      backdrop-filter: blur(10px);
+    }
+
+    .info h2 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      text-shadow: 0 0 14px rgba(255, 0, 200, 0.25);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #79f7ff;
+      font-size: 0.95rem;
+      box-shadow: inset 0 0 10px rgba(255,255,255,0.03);
+    }
+
+    footer {
+      margin-top: 28px;
+      font-size: 0.95rem;
+      color: #c8bfe3;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 640px) {
+      .pfp-wrap {
+        width: 150px;
+        height: 150px;
+      }
+
+      .bio-main {
+        font-size: 1.2rem;
+      }
+
+      .bio-soft {
+        font-size: 1rem;
+      }
+
+      .social {
+        padding: 22px 18px;
+      }
+
+      .info {
+        padding: 24px 18px;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="neon-bg"></div>
 
-<div class="neon-bg"></div>
+  <div class="container">
+    <section class="hero">
+      <div class="pfp-wrap">
+        <img src="crop_pfp.png" alt="WIZMALEDITS profile picture" class="pfp" />
+      </div>
 
-<img src="crop_pfp.png" class="pfp">
+      <h1>WIZMALEDITS</h1>
 
-<h1>WIZMALEDITS</h1>
+      <div class="bio">
+        <p class="bio-main">Do you all think I made it?</p>
+        <p class="bio-soft">Is it trust I'm not having...</p>
+        <p class="bio-tag">Anime edits • neon motion • Zero Two energy</p>
+      </div>
 
-<div class="bio">
-<p>Do you all think I made it?</p>
-<p>Is it trust I'm not having...</p>
-<p><b>JOIN BELOW FOR EDITING HELP!</b></p>
-</div>
+      <div class="social-wrap">
+        <a class="social" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">
+          <div class="social-icon tiktok-icon">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <path d="M37 8c1.4 7.9 6 12.7 14 13.7v8.3c-4.9-.1-9.1-1.4-13-4v15.5C38 51 31.8 56 23.4 56 14.7 56 8 49.4 8 40.8c0-9 7-15.7 16.9-15.7 1.5 0 2.8.1 4 .4v8.6c-1.1-.4-2.2-.6-3.4-.6-4.5 0-7.8 3-7.8 7.3 0 4.1 3 7.1 7.2 7.1 5.1 0 7.4-3.7 7.4-9.1V8h4.7z" fill="currentColor"></path>
+            </svg>
+          </div>
+          <h3>TikTok</h3>
+          <p>@wizmaledits<br />Follow for edits, clips, and new anime posts.</p>
+        </a>
 
-<div>
+        <a class="social" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">
+          <div class="social-icon discord-icon">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <path d="M53.5 18.7a40.8 40.8 0 0 0-10.2-3.2l-.5 1a37.5 37.5 0 0 0-10.8 0l-.5-1a40.9 40.9 0 0 0-10.2 3.2C14.8 28.4 13 37.8 13.9 47.1a41 41 0 0 0 12.5 6.4l2.7-4.5c-1.5-.5-2.9-1.2-4.2-2 0-.1.1-.1.2-.2 8 3.8 16.7 3.8 24.6 0l.2.2c-1.3.8-2.7 1.5-4.2 2l2.7 4.5a41 41 0 0 0 12.5-6.4c1.1-10.7-1.8-20-7.4-28.4zM26.2 41.4c-2.4 0-4.4-2.2-4.4-4.8s1.9-4.8 4.4-4.8c2.4 0 4.4 2.2 4.4 4.8 0 2.7-1.9 4.8-4.4 4.8zm11.6 0c-2.4 0-4.4-2.2-4.4-4.8s1.9-4.8 4.4-4.8c2.4 0 4.4 2.2 4.4 4.8 0 2.7-1.9 4.8-4.4 4.8z" fill="currentColor"></path>
+            </svg>
+          </div>
+          <h3>Discord</h3>
+          <p>Join for editing help, feedback, and community.</p>
+        </a>
+      </div>
 
-<a class="social" href="https://www.tiktok.com/@wizmaledits" target="_blank">
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/TikTok_logo.svg">
-<h3>TikTok</h3>
-</a>
+      <div class="buttons">
+        <button class="active" onclick="showInfo('me', this)">About Me</button>
+        <button onclick="showInfo('channel', this)">About Channel</button>
+        <button onclick="showInfo('vibes', this)">Vibes</button>
+      </div>
 
-<a class="social" href="https://discord.gg/X2f7HmA3Wv" target="_blank">
-<img src="https://upload.wikimedia.org/wikipedia/en/9/98/Discord_logo.svg">
-<h3>Discord</h3>
-</a>
+      <div class="info" id="info">
+        <h2>About Me</h2>
+        <p>
+          I’m WIZMALEDITS and I make anime edits with a clean neon look, emotional scenes,
+          and strong energy. A lot of my content is inspired by Darling in the Franxx,
+          smooth motion, and edits that feel intense and memorable.
+        </p>
+        <div class="chips">
+          <span class="chip">Anime Edits</span>
+          <span class="chip">Neon Style</span>
+          <span class="chip">Zero Two Energy</span>
+        </div>
+      </div>
 
-</div>
+      <footer>© 2026 WIZMALEDITS</footer>
+    </section>
+  </div>
 
-<div class="buttons">
-<button onclick="show('me')">About Me</button>
-<button onclick="show('channel')">About Channel</button>
-</div>
+  <script>
+    const infoData = {
+      me: {
+        title: "About Me",
+        text: "I’m WIZMALEDITS and I make anime edits with a clean neon look, emotional scenes, and strong energy. A lot of my content is inspired by Darling in the Franxx, smooth motion, and edits that feel intense and memorable.",
+        chips: ["Anime Edits", "Neon Style", "Zero Two Energy"]
+      },
+      channel: {
+        title: "About Channel",
+        text: "My page is built around anime edits, visual effects, strong scenes, and a style that stands out. This site gives people one place to find my TikTok, join my Discord, and get the full WIZMALEDITS vibe.",
+        chips: ["TikTok Creator", "Darling in the Franxx", "AMV Vibes"]
+      },
+      vibes: {
+        title: "Vibes",
+        text: "This whole page is meant to feel like the edit style itself: dark, glowing, fast, and anime-focused. I wanted it to feel more like a brand page than a plain link page.",
+        chips: ["Dark Neon", "Anime Mood", "Edit Brand"]
+      }
+    };
 
-<div class="info" id="info">
-Welcome to my site.
-</div>
+    function showInfo(type, button) {
+      const info = infoData[type];
+      document.getElementById("info").innerHTML = `
+        <h2>${info.title}</h2>
+        <p>${info.text}</p>
+        <div class="chips">
+          ${info.chips.map(chip => `<span class="chip">${chip}</span>`).join("")}
+        </div>
+      `;
 
-<script>
-
-function show(type){
-
-if(type==="me"){
-document.getElementById("info").innerHTML=
-"I make anime edits with neon style effects and emotional scenes.";
-}
-
-if(type==="channel"){
-document.getElementById("info").innerHTML=
-"My TikTok page is focused on anime edits, mainly Darling in the Franxx.";
-}
-
-}
-
-</script>
-
+      document.querySelectorAll(".buttons button").forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+    }
+  </script>
 </body>
 </html>
