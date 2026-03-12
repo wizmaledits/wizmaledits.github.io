@@ -3,8 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0715" />
   <title>WIZMALEDITS</title>
   <style>
+    :root {
+      --bg-1: #07010f;
+      --bg-2: #09131f;
+      --panel: rgba(14, 11, 29, 0.68);
+      --panel-2: rgba(20, 16, 40, 0.82);
+      --line: rgba(255, 255, 255, 0.11);
+      --text: #ffffff;
+      --muted: #d7d2ef;
+      --pink: #ff2bd6;
+      --cyan: #38f3ff;
+      --purple: #8f48ff;
+      --maxw: 1120px;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -12,147 +27,396 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      background: #05030a;
-      color: white;
-      text-align: center;
-      overflow-x: hidden;
       min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, #180623 0%, transparent 30%),
+        radial-gradient(circle at top right, #041a22 0%, transparent 25%),
+        linear-gradient(135deg, var(--bg-1) 0%, #04070f 45%, var(--bg-2) 100%);
+      overflow-x: hidden;
       position: relative;
     }
 
-    .neon-bg {
+    .bg-orbs,
+    .bg-grid,
+    .bg-stars,
+    .bg-noise,
+    .floating-particles {
       position: fixed;
       inset: 0;
-      background:
-        radial-gradient(circle at 15% 25%, rgba(255, 0, 170, 0.35), transparent 28%),
-        radial-gradient(circle at 85% 30%, rgba(0, 255, 255, 0.22), transparent 30%),
-        radial-gradient(circle at 70% 80%, rgba(140, 0, 255, 0.25), transparent 28%),
-        linear-gradient(135deg, #090011 0%, #04060f 50%, #02161a 100%);
-      animation: movebg 10s ease-in-out infinite alternate;
-      z-index: -3;
+      pointer-events: none;
     }
 
-    body::before {
+    .bg-orbs {
+      z-index: -5;
+      filter: blur(80px);
+      opacity: 0.85;
+    }
+
+    .bg-orbs::before,
+    .bg-orbs::after {
       content: "";
-      position: fixed;
-      inset: 0;
+      position: absolute;
+      inset: -15%;
+      animation: drift 16s ease-in-out infinite alternate;
+    }
+
+    .bg-orbs::before {
       background:
+        radial-gradient(circle at 16% 24%, rgba(255, 43, 214, 0.35), transparent 18%),
+        radial-gradient(circle at 80% 18%, rgba(56, 243, 255, 0.22), transparent 17%),
+        radial-gradient(circle at 58% 74%, rgba(143, 72, 255, 0.24), transparent 22%);
+    }
+
+    .bg-orbs::after {
+      animation-duration: 22s;
+      background:
+        radial-gradient(circle at 18% 78%, rgba(56, 243, 255, 0.15), transparent 15%),
+        radial-gradient(circle at 88% 74%, rgba(255, 43, 214, 0.18), transparent 14%),
+        radial-gradient(circle at 60% 10%, rgba(143, 72, 255, 0.18), transparent 15%);
+    }
+
+    .bg-grid {
+      z-index: -4;
+      background-image:
         linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
       background-size: 34px 34px;
-      opacity: 0.15;
+      mask-image: linear-gradient(to bottom, transparent, rgba(255,255,255,0.9), transparent);
+      opacity: 0.22;
+      transform: perspective(900px) rotateX(75deg) translateY(250px) scale(1.25);
+      transform-origin: center;
+    }
+
+    .bg-stars {
+      z-index: -3;
+      background-image:
+        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.9) 0 1px, transparent 2px),
+        radial-gradient(circle at 82% 26%, rgba(255,255,255,0.55) 0 1px, transparent 2px),
+        radial-gradient(circle at 72% 72%, rgba(255,255,255,0.7) 0 1px, transparent 2px),
+        radial-gradient(circle at 26% 78%, rgba(255,255,255,0.5) 0 1px, transparent 2px),
+        radial-gradient(circle at 50% 38%, rgba(255,255,255,0.65) 0 1px, transparent 2px),
+        radial-gradient(circle at 90% 58%, rgba(255,255,255,0.45) 0 1px, transparent 2px);
+      background-size: 280px 280px;
+      opacity: 0.55;
+      animation: twinkle 6s linear infinite;
+    }
+
+    .bg-noise {
       z-index: -2;
-      pointer-events: none;
+      opacity: 0.08;
+      background-image:
+        repeating-radial-gradient(circle at 0 0, transparent 0, transparent 2px, rgba(255,255,255,0.4) 3px, transparent 4px);
+      background-size: 18px 18px;
+      mix-blend-mode: soft-light;
     }
 
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at center, transparent 25%, rgba(0,0,0,0.45) 100%);
+    .floating-particles {
       z-index: -1;
-      pointer-events: none;
+      overflow: hidden;
     }
 
-    @keyframes movebg {
-      0% {
-        transform: translate(0, 0) scale(1);
-        filter: hue-rotate(0deg);
-      }
-      100% {
-        transform: translate(-25px, -20px) scale(1.05);
-        filter: hue-rotate(18deg);
-      }
+    .floating-particles span {
+      position: absolute;
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 0 12px rgba(255,255,255,0.35), 0 0 24px rgba(56,243,255,0.18);
+      opacity: 0.35;
+      animation: floatUp linear infinite;
     }
+
+    .floating-particles span:nth-child(1) { left: 5%; animation-duration: 20s; animation-delay: -2s; top: 110%; }
+    .floating-particles span:nth-child(2) { left: 12%; animation-duration: 16s; animation-delay: -5s; top: 112%; }
+    .floating-particles span:nth-child(3) { left: 20%; animation-duration: 24s; animation-delay: -9s; top: 108%; }
+    .floating-particles span:nth-child(4) { left: 29%; animation-duration: 18s; animation-delay: -1s; top: 111%; }
+    .floating-particles span:nth-child(5) { left: 38%; animation-duration: 22s; animation-delay: -7s; top: 109%; }
+    .floating-particles span:nth-child(6) { left: 47%; animation-duration: 17s; animation-delay: -4s; top: 111%; }
+    .floating-particles span:nth-child(7) { left: 56%; animation-duration: 21s; animation-delay: -8s; top: 108%; }
+    .floating-particles span:nth-child(8) { left: 65%; animation-duration: 15s; animation-delay: -3s; top: 110%; }
+    .floating-particles span:nth-child(9) { left: 74%; animation-duration: 23s; animation-delay: -11s; top: 113%; }
+    .floating-particles span:nth-child(10) { left: 82%; animation-duration: 19s; animation-delay: -6s; top: 110%; }
+    .floating-particles span:nth-child(11) { left: 89%; animation-duration: 25s; animation-delay: -12s; top: 109%; }
+    .floating-particles span:nth-child(12) { left: 95%; animation-duration: 18s; animation-delay: -10s; top: 112%; }
 
     .container {
-      width: min(1000px, calc(100% - 24px));
+      width: min(var(--maxw), calc(100% - 24px));
       margin: 0 auto;
-      padding: 32px 0 50px;
+      padding: 18px 0 46px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      border-radius: 18px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.18);
+    }
+
+    .brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mini .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink), var(--cyan));
+      box-shadow: 0 0 12px rgba(255,43,214,0.34), 0 0 18px rgba(56,243,255,0.24);
+      animation: pulse 2.2s ease-in-out infinite;
+      flex: 0 0 auto;
+    }
+
+    .brand-mini p {
+      color: var(--muted);
+      font-size: 0.94rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mini-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .mini-links a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.92rem;
+      transition: 0.2s ease;
+    }
+
+    .mini-links a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 18px rgba(255, 43, 214, 0.16), 0 0 18px rgba(56, 243, 255, 0.12);
+      border-color: rgba(255,255,255,0.22);
     }
 
     .hero {
-      padding: 30px 20px 20px;
+      position: relative;
+      padding: 32px;
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      backdrop-filter: blur(18px);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.02),
+        0 10px 40px rgba(0,0,0,0.28),
+        0 0 28px rgba(255, 43, 214, 0.08),
+        0 0 32px rgba(56, 243, 255, 0.05);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 15%, rgba(255,255,255,0.08) 48%, transparent 52%, transparent 85%);
+      transform: translateX(-120%);
+      animation: sheen 8s linear infinite;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 28px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pfp-column {
+      display: grid;
+      gap: 18px;
+      justify-items: center;
     }
 
     .pfp-wrap {
-      width: 180px;
-      height: 180px;
-      margin: 0 auto 24px;
+      position: relative;
+      width: 190px;
+      height: 190px;
       border-radius: 50%;
       padding: 5px;
-      background: conic-gradient(#ff00c8, #00f7ff, #8a2eff, #ff00c8);
-      box-shadow:
-        0 0 25px rgba(255, 0, 200, 0.7),
-        0 0 55px rgba(0, 247, 255, 0.35);
-      animation: spinGlow 6s linear infinite;
+      background: conic-gradient(from 0deg, var(--pink), var(--cyan), var(--purple), var(--pink));
+      box-shadow: 0 0 28px rgba(255,43,214,0.34), 0 0 44px rgba(56,243,255,0.24);
+      animation: spin 9s linear infinite;
     }
 
     .pfp {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 50%;
       display: block;
+      border-radius: 50%;
+      border: 4px solid rgba(0, 0, 0, 0.92);
       background: #000;
-      border: 4px solid rgba(0, 0, 0, 0.9);
     }
 
-    @keyframes spinGlow {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+    .live-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .live-chip span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink), var(--cyan));
+      box-shadow: 0 0 10px rgba(255,43,214,0.34), 0 0 14px rgba(56,243,255,0.24);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    .headline {
+      display: grid;
+      gap: 14px;
     }
 
     h1 {
-      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      line-height: 0.95;
       font-weight: 900;
-      letter-spacing: 1px;
+      letter-spacing: 1.6px;
       text-transform: uppercase;
-      text-shadow:
-        0 0 8px rgba(255,255,255,0.95),
-        0 0 18px rgba(255,0,200,0.8),
-        0 0 35px rgba(0,255,255,0.35);
-      margin-bottom: 18px;
+      text-shadow: 0 0 10px rgba(255,255,255,0.85), 0 0 22px rgba(255, 43, 214, 0.7), 0 0 36px rgba(56, 243, 255, 0.24);
+      animation: titleGlow 3.4s ease-in-out infinite alternate;
+    }
+
+    .subline {
+      color: var(--muted);
+      font-size: 1.03rem;
+      letter-spacing: 0.6px;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .stat {
+      padding: 12px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      min-width: 120px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.2rem;
+      color: var(--cyan);
+      margin-bottom: 2px;
+    }
+
+    .stat small {
+      color: var(--muted);
+      font-size: 0.88rem;
     }
 
     .bio {
-      max-width: 760px;
-      margin: 0 auto 28px;
+      margin-top: 18px;
       display: grid;
-      gap: 12px;
+      gap: 11px;
+      max-width: 700px;
     }
 
     .bio-main {
-      font-size: 1.45rem;
-      font-weight: 700;
-      color: #ffffff;
-      text-shadow: 0 0 14px rgba(255, 0, 200, 0.35);
+      font-size: clamp(1.2rem, 2.6vw, 1.65rem);
+      font-weight: 800;
+      text-shadow: 0 0 14px rgba(255, 43, 214, 0.22);
     }
 
     .bio-soft {
-      font-size: 1.15rem;
-      color: #e8dcff;
-      opacity: 0.95;
+      color: #efeaff;
+      opacity: 0.92;
+      font-size: 1.08rem;
     }
 
     .bio-tag {
-      font-size: 0.98rem;
-      letter-spacing: 1.2px;
+      display: inline-block;
+      width: fit-content;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--cyan);
+      font-size: 0.93rem;
+      letter-spacing: 1.1px;
       text-transform: uppercase;
-      color: #79f7ff;
-      text-shadow: 0 0 12px rgba(0, 255, 255, 0.35);
+    }
+
+    .cta-row {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .cta,
+    .ghost {
+      text-decoration: none;
+      color: white;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 700;
+      transition: 0.22s ease;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .cta {
+      background: linear-gradient(90deg, rgba(255,43,214,0.26), rgba(56,243,255,0.18));
+      box-shadow: 0 0 20px rgba(255,43,214,0.16), 0 0 20px rgba(56,243,255,0.1);
+    }
+
+    .ghost {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .cta:hover,
+    .ghost:hover {
+      transform: translateY(-2px);
     }
 
     .social-wrap {
+      margin-top: 26px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 18px;
-      margin: 12px auto 30px;
+      gap: 16px;
     }
 
     .social {
@@ -161,68 +425,76 @@
       text-decoration: none;
       color: white;
       background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 24px;
-      padding: 26px 20px;
+      padding: 22px;
       overflow: hidden;
       transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 24px rgba(255, 0, 200, 0.08);
+      min-height: 196px;
     }
 
     .social:hover {
-      transform: translateY(-8px) scale(1.02);
-      border-color: rgba(255,255,255,0.28);
-      box-shadow:
-        0 0 28px rgba(255, 0, 200, 0.18),
-        0 0 40px rgba(0, 255, 255, 0.12);
+      transform: translateY(-8px) scale(1.01);
+      border-color: rgba(255,255,255,0.24);
+      box-shadow: 0 0 28px rgba(255,43,214,0.18), 0 0 34px rgba(56,243,255,0.12);
     }
 
     .social::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 45%, transparent);
+      background: linear-gradient(145deg, rgba(255,255,255,0.08), transparent 35%, transparent 65%, rgba(255,255,255,0.04));
       pointer-events: none;
     }
 
     .social-icon {
       width: 78px;
       height: 78px;
-      margin: 0 auto 16px;
       border-radius: 22px;
       display: grid;
       place-items: center;
-      font-size: 2rem;
-      box-shadow: 0 0 20px rgba(255,255,255,0.08);
+      margin-bottom: 16px;
     }
 
     .social-icon svg {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       display: block;
     }
 
-    .tiktok-icon {
-      background: linear-gradient(135deg, rgba(255,0,170,0.24), rgba(0,255,255,0.18));
-      color: #ffffff;
-    }
-
-    .discord-icon {
-      background: linear-gradient(135deg, rgba(120,100,255,0.30), rgba(0,255,255,0.16));
-      color: #ffffff;
-    }
+    .tiktok-icon { background: linear-gradient(135deg, rgba(255,43,214,0.24), rgba(56,243,255,0.18)); }
+    .discord-icon { background: linear-gradient(135deg, rgba(143,72,255,0.32), rgba(56,243,255,0.14)); }
 
     .social h3 {
       font-size: 1.45rem;
       margin-bottom: 8px;
-      text-shadow: 0 0 12px rgba(255, 0, 200, 0.22);
+      text-shadow: 0 0 12px rgba(255,43,214,0.18);
     }
 
     .social p {
-      color: #dfd5ff;
-      line-height: 1.6;
-      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .social-badge {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .sections {
+      margin-top: 22px;
+      display: grid;
+      gap: 18px;
     }
 
     .buttons {
@@ -230,193 +502,414 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 12px;
-      margin-bottom: 18px;
     }
 
     .buttons button {
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
       color: white;
-      padding: 13px 22px;
+      padding: 13px 20px;
       border-radius: 999px;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 700;
-      transition: 0.2s ease;
-      box-shadow: 0 0 15px rgba(255, 0, 200, 0.10);
+      transition: 0.22s ease;
     }
 
     .buttons button:hover,
     .buttons button.active {
       transform: translateY(-2px);
-      background: linear-gradient(90deg, rgba(255,0,170,0.28), rgba(0,255,255,0.18));
-      box-shadow:
-        0 0 20px rgba(255,0,170,0.22),
-        0 0 24px rgba(0,255,255,0.14);
+      background: linear-gradient(90deg, rgba(255,43,214,0.24), rgba(56,243,255,0.16));
+      box-shadow: 0 0 18px rgba(255,43,214,0.18), 0 0 20px rgba(56,243,255,0.1);
     }
 
     .info {
-      max-width: 850px;
-      margin: 0 auto;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 26px;
-      padding: 28px 22px;
-      line-height: 1.8;
+      padding: 28px 24px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.025));
       color: #f3edff;
-      box-shadow: 0 0 25px rgba(138, 46, 255, 0.10);
-      backdrop-filter: blur(10px);
+      line-height: 1.85;
+      backdrop-filter: blur(14px);
+      text-align: left;
     }
 
     .info h2 {
-      font-size: 1.8rem;
-      margin-bottom: 12px;
-      text-shadow: 0 0 14px rgba(255, 0, 200, 0.25);
+      font-size: 1.9rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 14px rgba(255,43,214,0.22);
+    }
+
+    .info p {
+      font-size: 1.03rem;
+      color: #efeaff;
     }
 
     .chips {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 10px;
       margin-top: 18px;
     }
 
     .chip {
-      padding: 8px 14px;
+      padding: 9px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-      color: #79f7ff;
-      font-size: 0.95rem;
-      box-shadow: inset 0 0 10px rgba(255,255,255,0.03);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--cyan);
+      font-size: 0.92rem;
     }
 
-    footer {
-      margin-top: 28px;
-      font-size: 0.95rem;
-      color: #c8bfe3;
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .feature-card,
+    .panel,
+    .mini-card {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      border-radius: 18px;
+    }
+
+    .feature-card {
+      padding: 16px;
+    }
+
+    .feature-card strong,
+    .mini-card strong {
+      display: block;
+      margin-bottom: 6px;
+      color: white;
+    }
+
+    .feature-card span,
+    .mini-card span,
+    .panel p {
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.55;
+    }
+
+    .bottom-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 18px;
+    }
+
+    .panel {
+      padding: 22px;
+      border-radius: 24px;
+    }
+
+    .panel h3 {
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+      text-shadow: 0 0 12px rgba(255,43,214,0.16);
+    }
+
+    .stack {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .mini-card {
+      padding: 14px 15px;
+      border-radius: 16px;
+    }
+
+    .footer {
+      margin-top: 20px;
+      padding: 18px 6px 4px;
+      color: #c6bedf;
+      text-align: center;
+      font-size: 0.94rem;
       opacity: 0.9;
     }
 
-    @media (max-width: 640px) {
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes drift { 0% { transform: translate3d(0,0,0) scale(1); } 100% { transform: translate3d(2%, -2%, 0) scale(1.08); } }
+    @keyframes twinkle { 0%,100% { opacity: 0.42; } 50% { opacity: 0.66; } }
+    @keyframes sheen { to { transform: translateX(130%); } }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.15); opacity: 1; } }
+    @keyframes titleGlow { 0% { text-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,43,214,0.62), 0 0 30px rgba(56,243,255,0.18); } 100% { text-shadow: 0 0 12px rgba(255,255,255,0.95), 0 0 28px rgba(255,43,214,0.86), 0 0 38px rgba(56,243,255,0.28); } }
+    @keyframes floatUp { 0% { transform: translateY(0) scale(0.9); opacity: 0; } 10% { opacity: 0.35; } 80% { opacity: 0.32; } 100% { transform: translateY(-120vh) scale(1.2); opacity: 0; } }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .bottom-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .headline,
+      .info {
+        text-align: center;
+      }
+
+      .stats,
+      .chips,
+      .bio,
+      .cta-row {
+        justify-content: center;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        width: min(100% - 14px, var(--maxw));
+      }
+
+      .topbar,
+      .hero,
+      .info,
+      .panel,
+      .social {
+        border-radius: 20px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .mini-links {
+        justify-content: center;
+      }
+
+      .hero {
+        padding: 22px 16px;
+      }
+
       .pfp-wrap {
         width: 150px;
         height: 150px;
       }
 
-      .bio-main {
-        font-size: 1.2rem;
+      .stat {
+        min-width: unset;
+        flex: 1 1 calc(50% - 8px);
       }
 
-      .bio-soft {
-        font-size: 1rem;
+      .social-wrap,
+      .feature-grid {
+        grid-template-columns: 1fr;
       }
 
-      .social {
-        padding: 22px 18px;
+      .buttons button,
+      .cta,
+      .ghost,
+      .mini-links a {
+        width: 100%;
+        text-align: center;
       }
 
-      .info {
-        padding: 24px 18px;
+      .cta-row {
+        display: grid;
       }
+
+      .bio-main { font-size: 1.15rem; }
+      .bio-soft { font-size: 0.98rem; }
     }
   </style>
 </head>
 <body>
-  <div class="neon-bg"></div>
+  <div class="bg-orbs"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-stars"></div>
+  <div class="bg-noise"></div>
+  <div class="floating-particles">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
 
   <div class="container">
-    <section class="hero">
-      <div class="pfp-wrap">
-        <img src="crop_pfp.png" alt="WIZMALEDITS profile picture" class="pfp" />
+    <div class="topbar">
+      <div class="brand-mini">
+        <div class="dot"></div>
+        <p>WIZMALEDITS • anime edits • neon motion • creator landing page</p>
       </div>
+      <div class="mini-links">
+        <a href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">Open TikTok</a>
+        <a href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">Join Discord</a>
+      </div>
+    </div>
 
-      <h1>WIZMALEDITS</h1>
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="pfp-column">
+          <div class="pfp-wrap">
+            <img src="crop_pfp.png" alt="WIZMALEDITS profile picture" class="pfp" />
+          </div>
+          <div class="live-chip"><span></span> Creator page online</div>
+        </div>
 
-      <div class="bio">
-        <p class="bio-main">Do you all think I made it?</p>
-        <p class="bio-soft">Is it trust I'm not having...</p>
-        <p class="bio-tag">Anime edits • neon motion • Zero Two energy</p>
+        <div class="headline">
+          <h1>WIZMALEDITS</h1>
+          <p class="subline">Dark neon style • Darling in the Franxx energy • polished for phone and desktop</p>
+
+          <div class="stats">
+            <div class="stat"><strong>199</strong><small>Following</small></div>
+            <div class="stat"><strong>1140</strong><small>Followers</small></div>
+            <div class="stat"><strong>134.1K</strong><small>Likes</small></div>
+          </div>
+
+          <div class="bio">
+            <p class="bio-main">Do you all think I made it?</p>
+            <p class="bio-soft">Is it trust I'm not having...</p>
+            <p class="bio-tag">Anime edits • neon motion • Zero Two energy</p>
+          </div>
+
+          <div class="cta-row">
+            <a class="cta" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">Watch on TikTok</a>
+            <a class="ghost" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">Join the Discord</a>
+          </div>
+        </div>
       </div>
 
       <div class="social-wrap">
         <a class="social" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">
+          <span class="social-badge">Main</span>
           <div class="social-icon tiktok-icon">
             <svg viewBox="0 0 64 64" aria-hidden="true">
               <path d="M37 8c1.4 7.9 6 12.7 14 13.7v8.3c-4.9-.1-9.1-1.4-13-4v15.5C38 51 31.8 56 23.4 56 14.7 56 8 49.4 8 40.8c0-9 7-15.7 16.9-15.7 1.5 0 2.8.1 4 .4v8.6c-1.1-.4-2.2-.6-3.4-.6-4.5 0-7.8 3-7.8 7.3 0 4.1 3 7.1 7.2 7.1 5.1 0 7.4-3.7 7.4-9.1V8h4.7z" fill="currentColor"></path>
             </svg>
           </div>
           <h3>TikTok</h3>
-          <p>@wizmaledits<br />Follow for edits, clips, and new anime posts.</p>
+          <p>@wizmaledits<br>Follow for edits, clips, transitions, and new anime posts.</p>
         </a>
 
         <a class="social" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">
+          <span class="social-badge">Community</span>
           <div class="social-icon discord-icon">
             <svg viewBox="0 0 64 64" aria-hidden="true">
               <path d="M53.5 18.7a40.8 40.8 0 0 0-10.2-3.2l-.5 1a37.5 37.5 0 0 0-10.8 0l-.5-1a40.9 40.9 0 0 0-10.2 3.2C14.8 28.4 13 37.8 13.9 47.1a41 41 0 0 0 12.5 6.4l2.7-4.5c-1.5-.5-2.9-1.2-4.2-2 0-.1.1-.1.2-.2 8 3.8 16.7 3.8 24.6 0l.2.2c-1.3.8-2.7 1.5-4.2 2l2.7 4.5a41 41 0 0 0 12.5-6.4c1.1-10.7-1.8-20-7.4-28.4zM26.2 41.4c-2.4 0-4.4-2.2-4.4-4.8s1.9-4.8 4.4-4.8c2.4 0 4.4 2.2 4.4 4.8 0 2.7-1.9 4.8-4.4 4.8zm11.6 0c-2.4 0-4.4-2.2-4.4-4.8s1.9-4.8 4.4-4.8c2.4 0 4.4 2.2 4.4 4.8 0 2.7-1.9 4.8-4.4 4.8z" fill="currentColor"></path>
             </svg>
           </div>
           <h3>Discord</h3>
-          <p>Join for editing help, feedback, and community.</p>
+          <p>Join for editing help, feedback, friends, updates, and community vibes.</p>
         </a>
       </div>
 
-      <div class="buttons">
-        <button class="active" onclick="showInfo('me', this)">About Me</button>
-        <button onclick="showInfo('channel', this)">About Channel</button>
-        <button onclick="showInfo('vibes', this)">Vibes</button>
-      </div>
+      <div class="sections">
+        <div class="buttons">
+          <button class="active" onclick="showInfo('about', this)">About Me</button>
+          <button onclick="showInfo('channel', this)">About Channel</button>
+          <button onclick="showInfo('editing', this)">Editing</button>
+          <button onclick="showInfo('brand', this)">Brand</button>
+        </div>
 
-      <div class="info" id="info">
-        <h2>About Me</h2>
-        <p>
-          I’m WIZMALEDITS and I make anime edits with a clean neon look, emotional scenes,
-          and strong energy. A lot of my content is inspired by Darling in the Franxx,
-          smooth motion, and edits that feel intense and memorable.
-        </p>
-        <div class="chips">
-          <span class="chip">Anime Edits</span>
-          <span class="chip">Neon Style</span>
-          <span class="chip">Zero Two Energy</span>
+        <div class="info" id="infoBox">
+          <h2>About Me</h2>
+          <p>I’m WIZMALEDITS and I make anime edits with a clean neon look, emotional scenes, and strong energy. A lot of my content is inspired by Darling in the Franxx, smooth motion, and edits that feel intense and memorable.</p>
+          <div class="chips">
+            <span class="chip">Anime Edits</span>
+            <span class="chip">Neon Style</span>
+            <span class="chip">Zero Two Energy</span>
+          </div>
+          <div class="feature-grid">
+            <div class="feature-card"><strong>Style</strong><span>Dark neon colors, glow effects, smooth motion, and strong scene choice.</span></div>
+            <div class="feature-card"><strong>Focus</strong><span>Anime edits, emotional moments, visuals that stand out, and vibe-heavy content.</span></div>
+            <div class="feature-card"><strong>Goal</strong><span>A polished creator page that feels like an edit, not just a plain link site.</span></div>
+          </div>
         </div>
       </div>
 
-      <footer>© 2026 WIZMALEDITS</footer>
+      <div class="bottom-grid">
+        <div class="panel">
+          <h3>Why this site exists</h3>
+          <p>This page gives your TikTok account a real home. People can land here, get your vibe instantly, open your TikTok, join your Discord, and understand your style on both mobile and desktop. Everything is built to feel more like a creator brand page than a simple bio link.</p>
+        </div>
+
+        <div class="panel">
+          <h3>What’s included</h3>
+          <div class="stack">
+            <div class="mini-card"><strong>Animated background</strong><span>Neon orbs, stars, floating particles, glow, and moving depth.</span></div>
+            <div class="mini-card"><strong>Mobile support</strong><span>Buttons stack cleanly, sections resize, and the layout stays readable on phones.</span></div>
+            <div class="mini-card"><strong>Better polish</strong><span>Hover effects, glowing profile frame, creator stats, action buttons, and branded cards.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">© 2026 WIZMALEDITS • Built for GitHub Pages</div>
     </section>
   </div>
 
   <script>
-    const infoData = {
-      me: {
-        title: "About Me",
-        text: "I’m WIZMALEDITS and I make anime edits with a clean neon look, emotional scenes, and strong energy. A lot of my content is inspired by Darling in the Franxx, smooth motion, and edits that feel intense and memorable.",
-        chips: ["Anime Edits", "Neon Style", "Zero Two Energy"]
+    const sections = {
+      about: {
+        title: 'About Me',
+        text: 'I’m WIZMALEDITS and I make anime edits with a clean neon look, emotional scenes, and strong energy. A lot of my content is inspired by Darling in the Franxx, smooth motion, and edits that feel intense and memorable.',
+        chips: ['Anime Edits', 'Neon Style', 'Zero Two Energy'],
+        features: [
+          { title: 'Style', text: 'Dark neon colors, glow effects, smooth motion, and strong scene choice.' },
+          { title: 'Focus', text: 'Anime edits, emotional moments, visuals that stand out, and vibe-heavy content.' },
+          { title: 'Goal', text: 'A polished creator page that feels like an edit, not just a plain link site.' }
+        ]
       },
       channel: {
-        title: "About Channel",
-        text: "My page is built around anime edits, visual effects, strong scenes, and a style that stands out. This site gives people one place to find my TikTok, join my Discord, and get the full WIZMALEDITS vibe.",
-        chips: ["TikTok Creator", "Darling in the Franxx", "AMV Vibes"]
+        title: 'About Channel',
+        text: 'My page is built around anime edits, visual effects, strong scenes, and a style that stands out. This site gives people one place to find my TikTok, join my Discord, and get the full WIZMALEDITS vibe.',
+        chips: ['TikTok Creator', 'Darling in the Franxx', 'AMV Vibes'],
+        features: [
+          { title: 'Content', text: 'Short edits, sharp transitions, motion sync, and anime highlights.' },
+          { title: 'Audience', text: 'People who like clean edits, anime emotion, and high-energy visuals.' },
+          { title: 'Purpose', text: 'Turn viewers into followers and community members with one link.' }
+        ]
       },
-      vibes: {
-        title: "Vibes",
-        text: "This whole page is meant to feel like the edit style itself: dark, glowing, fast, and anime-focused. I wanted it to feel more like a brand page than a plain link page.",
-        chips: ["Dark Neon", "Anime Mood", "Edit Brand"]
+      editing: {
+        title: 'Editing',
+        text: 'Editing is a huge part of the brand. The Discord gives people a place to ask questions, get advice, improve their edits, and connect with other editors. It makes the page useful, not just cool-looking.',
+        chips: ['Editing Help', 'Feedback', 'Community'],
+        features: [
+          { title: 'Help', text: 'A place for questions, practice, ideas, and improving your editing skills.' },
+          { title: 'Feedback', text: 'Share edits, get opinions, and level up over time.' },
+          { title: 'Connection', text: 'Build a small community around the account instead of just posting content.' }
+        ]
+      },
+      brand: {
+        title: 'Brand',
+        text: 'The goal of this site is to make WIZMALEDITS feel like a real creator brand. The glowing style, motion, and layout all match that darker anime-edit vibe, while still being clean and easy to use.',
+        chips: ['Creator Page', 'Dark Neon', 'Polished'],
+        features: [
+          { title: 'Look', text: 'Animated background, glowing cards, and a profile frame that feels premium.' },
+          { title: 'Feel', text: 'Fast, smooth, dramatic, and mobile-friendly.' },
+          { title: 'Use', text: 'A solid landing page you can share anywhere.' }
+        ]
       }
     };
 
-    function showInfo(type, button) {
-      const info = infoData[type];
-      document.getElementById("info").innerHTML = `
-        <h2>${info.title}</h2>
-        <p>${info.text}</p>
+    function showInfo(key, button) {
+      const section = sections[key];
+      const infoBox = document.getElementById('infoBox');
+
+      infoBox.innerHTML = `
+        <h2>${section.title}</h2>
+        <p>${section.text}</p>
         <div class="chips">
-          ${info.chips.map(chip => `<span class="chip">${chip}</span>`).join("")}
+          ${section.chips.map(chip => `<span class="chip">${chip}</span>`).join('')}
+        </div>
+        <div class="feature-grid">
+          ${section.features.map(item => `
+            <div class="feature-card">
+              <strong>${item.title}</strong>
+              <span>${item.text}</span>
+            </div>
+          `).join('')}
         </div>
       `;
 
-      document.querySelectorAll(".buttons button").forEach(btn => btn.classList.remove("active"));
-      button.classList.add("active");
+      document.querySelectorAll('.buttons button').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
     }
   </script>
 </body>
