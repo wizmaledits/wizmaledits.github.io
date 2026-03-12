@@ -3,821 +3,636 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#090612" />
+  <meta name="theme-color" content="#14103a" />
   <title>WIZMALEDITS</title>
   <style>
     :root {
-      --bg: #070510;
-      --bg2: #0b0817;
-      --panel: rgba(18, 12, 34, 0.84);
-      --panel2: rgba(25, 16, 46, 0.92);
-      --line: rgba(178, 98, 255, 0.22);
-      --line2: rgba(255, 255, 255, 0.08);
+      --bg1: #14103a;
+      --bg2: #1e1550;
+      --bg3: #0f2249;
+      --panel: rgba(18, 18, 40, 0.72);
+      --line: rgba(255,255,255,0.10);
       --text: #ffffff;
-      --muted: #bcaed9;
-      --soft: #8f80af;
-      --pink: #ff4fd8;
-      --purple: #9b4dff;
-      --cyan: #23f0c7;
-      --blue: #6ca6ff;
-      --shadow: 0 20px 60px rgba(0,0,0,.38);
-      --radius-xl: 26px;
-      --radius-lg: 20px;
-      --radius-md: 16px;
-      --sidebar-w: 250px;
+      --muted: #d7d0f7;
+      --pink: #ff5ccf;
+      --purple: #8b5cff;
+      --cyan: #53ddff;
+      --yellow: #ffd166;
+      --shadow: 0 18px 40px rgba(0,0,0,0.28);
+      --maxw: 1100px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
     html { scroll-behavior: smooth; }
+
     body {
       min-height: 100vh;
       color: var(--text);
       background:
-        radial-gradient(circle at 18% 16%, rgba(155,77,255,.16), transparent 18%),
-        radial-gradient(circle at 84% 14%, rgba(255,79,216,.10), transparent 16%),
-        radial-gradient(circle at 70% 72%, rgba(35,240,199,.08), transparent 20%),
-        linear-gradient(135deg, var(--bg) 0%, #090614 52%, var(--bg2) 100%);
+        radial-gradient(circle at 15% 20%, rgba(255,92,207,0.16), transparent 20%),
+        radial-gradient(circle at 85% 18%, rgba(83,221,255,0.14), transparent 22%),
+        linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
       overflow-x: hidden;
-      position: relative;
     }
 
-    body::before,
-    body::after {
-      content: "";
+    .bg-stars {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: -3;
-    }
-
-    body::before {
+      z-index: -1;
       background-image:
-        radial-gradient(circle at 12% 20%, rgba(255,255,255,.9) 0 1px, transparent 3px),
-        radial-gradient(circle at 28% 74%, rgba(255,255,255,.55) 0 1px, transparent 3px),
-        radial-gradient(circle at 52% 34%, rgba(255,255,255,.55) 0 1px, transparent 3px),
-        radial-gradient(circle at 78% 62%, rgba(255,255,255,.5) 0 1px, transparent 3px),
-        radial-gradient(circle at 88% 24%, rgba(255,255,255,.65) 0 1px, transparent 3px);
-      background-size: 280px 280px;
-      opacity: .28;
-      animation: twinkle 6s linear infinite;
+        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.9) 0 1px, transparent 3px),
+        radial-gradient(circle at 28% 78%, rgba(255,255,255,0.55) 0 1px, transparent 3px),
+        radial-gradient(circle at 48% 26%, rgba(255,255,255,0.65) 0 1px, transparent 3px),
+        radial-gradient(circle at 70% 22%, rgba(255,255,255,0.75) 0 1px, transparent 3px),
+        radial-gradient(circle at 82% 68%, rgba(255,255,255,0.55) 0 1px, transparent 3px);
+      background-size: 260px 260px;
+      opacity: 0.45;
+      animation: twinkle 8s linear infinite;
     }
 
-    body::after {
-      background:
-        radial-gradient(circle at left bottom, rgba(255,79,216,.12), transparent 25%),
-        radial-gradient(circle at right top, rgba(108,166,255,.10), transparent 22%);
-      filter: blur(40px);
-      opacity: .8;
-    }
-
-    .app {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: var(--sidebar-w) 1fr;
-    }
-
-    .sidebar {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      background: linear-gradient(180deg, rgba(5,3,12,.98), rgba(10,7,20,.98));
-      border-right: 1px solid rgba(155,77,255,.18);
-      display: flex;
-      flex-direction: column;
-      z-index: 5;
-    }
-
-    .side-top {
-      padding: 22px 18px;
-      border-bottom: 1px solid rgba(155,77,255,.18);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 18px;
-    }
-
-    .brand-mark {
-      width: 50px;
-      height: 50px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(155,77,255,.28), rgba(255,79,216,.16));
-      border: 1px solid rgba(255,255,255,.08);
-      display: grid;
-      place-items: center;
-      box-shadow: 0 0 24px rgba(155,77,255,.18);
-      transform: rotate(-16deg);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .brand-mark::before {
-      content: "";
-      width: 18px;
-      height: 7px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--pink), var(--purple));
-      transform: rotate(16deg);
-      box-shadow: 0 0 14px rgba(255,79,216,.5);
-    }
-
-    .brand-copy h1 {
-      font-size: 1.6rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #f48bff;
-      margin-bottom: 5px;
-    }
-
-    .brand-copy p {
-      color: var(--soft);
-      text-transform: uppercase;
-      letter-spacing: 2.4px;
-      font-size: .72rem;
-    }
-
-    .discord-btn,
-    .chip-btn,
-    .hero-btn,
-    .tab,
-    .footer-btn {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .discord-btn::before,
-    .chip-btn::before,
-    .hero-btn::before,
-    .tab::before,
-    .footer-btn::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -120%;
-      width: 120%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
-      transition: left .55s ease;
-      pointer-events: none;
-    }
-
-    .discord-btn:hover::before,
-    .chip-btn:hover::before,
-    .hero-btn:hover::before,
-    .tab:hover::before,
-    .footer-btn:hover::before { left: 120%; }
-
-    .discord-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      text-decoration: none;
-      color: white;
-      background: linear-gradient(90deg, rgba(112,53,212,.34), rgba(255,79,216,.16));
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 16px;
-      padding: 14px 16px;
-      font-weight: 700;
-      box-shadow: 0 0 16px rgba(155,77,255,.14);
-    }
-
-    .nav {
-      padding: 16px 10px;
-      display: grid;
-      gap: 8px;
-      flex: 1;
-    }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 14px;
-      border-radius: 16px;
-      text-decoration: none;
-      color: var(--muted);
-      transition: .22s ease;
-      border: 1px solid transparent;
-    }
-
-    .nav-item:hover,
-    .nav-item.active {
-      color: white;
-      background: linear-gradient(90deg, rgba(155,77,255,.18), rgba(255,79,216,.08));
-      border-color: rgba(255,255,255,.06);
-      box-shadow: inset 0 0 0 1px rgba(155,77,255,.14), 0 0 16px rgba(155,77,255,.06);
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .nav-ico {
-      width: 22px;
-      text-align: center;
-      color: #d5a7ff;
-      font-size: 1rem;
-      flex: 0 0 auto;
-    }
-
-    .nav-badge {
-      min-width: 24px;
-      padding: 3px 7px;
-      border-radius: 999px;
-      font-size: .72rem;
-      background: linear-gradient(90deg, rgba(155,77,255,.85), rgba(255,79,216,.85));
-      color: white;
-      text-align: center;
-      font-weight: 700;
-    }
-
-    .side-bottom {
-      border-top: 1px solid rgba(155,77,255,.18);
-      padding: 18px 14px;
-      text-align: center;
-    }
-
-    .side-bottom strong {
-      display: block;
-      color: var(--pink);
-      font-size: 1.8rem;
-      margin-bottom: 4px;
-    }
-
-    .side-bottom span {
-      color: var(--soft);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-size: .72rem;
-    }
-
-    .main {
-      padding: 22px 22px 110px;
+    .container {
+      width: min(var(--maxw), calc(100% - 20px));
+      margin: 0 auto;
+      padding: 22px 0 34px;
     }
 
     .topbar,
     .hero,
-    .stat-card,
-    .section-shell,
-    .action-card,
+    .panel,
+    .social-card,
+    .info-card,
+    .mini-card,
     .footer-bar {
-      background: linear-gradient(180deg, rgba(22,14,39,.92), rgba(12,8,24,.95));
-      border: 1px solid rgba(155,77,255,.18);
+      background: var(--panel);
+      border: 1px solid var(--line);
       box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
-      padding: 16px 18px;
-      border-radius: var(--radius-xl);
-      margin-bottom: 20px;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 20px;
+      margin-bottom: 18px;
     }
 
-    .top-left {
+    .brand {
       display: flex;
       align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .top-left h2 {
-      font-size: 2rem;
-    }
-
-    .chip-btn {
-      padding: 10px 14px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(155,77,255,.22);
-      color: var(--muted);
-      font-size: .92rem;
-      text-decoration: none;
-    }
-
-    .chip-btn strong { color: var(--pink); }
-
-    .top-right {
-      display: flex;
       gap: 12px;
+      min-width: 0;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255,92,207,0.22), rgba(83,221,255,0.18));
+      border: 1px solid rgba(255,255,255,0.08);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 18px rgba(139,92,255,0.14);
+    }
+
+    .logo::before {
+      content: "";
+      width: 18px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--pink), var(--purple), var(--cyan));
+    }
+
+    .brand h1 {
+      font-size: 1.35rem;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      margin-bottom: 3px;
+    }
+
+    .brand p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
       flex-wrap: wrap;
       justify-content: flex-end;
     }
 
-    .status-box {
-      min-width: 148px;
-      padding: 12px 16px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(155,77,255,.18);
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .status-box strong {
-      display: block;
+    .btn,
+    .tab-btn,
+    .chip {
+      text-decoration: none;
       color: white;
-      margin-top: 4px;
-      font-size: .95rem;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.05);
+      border-radius: 999px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
     }
 
-    .status-box.live strong { color: #baffdc; }
+    .btn:hover,
+    .tab-btn:hover,
+    .chip:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 14px rgba(255,92,207,0.10), 0 0 14px rgba(83,221,255,0.08);
+    }
+
+    .nav .btn {
+      padding: 10px 14px;
+      font-weight: 700;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 18px;
+    }
 
     .hero {
-      border-radius: var(--radius-xl);
-      padding: 28px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      margin-bottom: 20px;
+      border-radius: 26px;
+      padding: 30px;
       position: relative;
       overflow: hidden;
-      isolation: isolate;
     }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, rgba(255,79,216,.06), transparent 52%, rgba(108,166,255,.05));
-      pointer-events: none;
-    }
-
-    .hero-copy { position: relative; z-index: 1; }
 
     .eyebrow {
-      color: var(--cyan);
+      color: var(--yellow);
       text-transform: uppercase;
-      letter-spacing: 1.8px;
-      font-size: .78rem;
-      margin-bottom: 10px;
+      letter-spacing: 2px;
+      font-size: 0.8rem;
+      margin-bottom: 14px;
     }
 
-    .hero h3 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      margin-bottom: 12px;
-      line-height: .98;
+    .hero h2 {
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      line-height: 0.95;
+      margin-bottom: 14px;
+      text-transform: uppercase;
     }
 
     .hero p {
       color: var(--muted);
-      line-height: 1.7;
-      max-width: 720px;
+      line-height: 1.75;
       font-size: 1rem;
+      max-width: 660px;
+      margin-bottom: 18px;
     }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .hero-stat {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 1.35rem;
+      margin-bottom: 4px;
+    }
+
+    .hero-stat span { color: var(--muted); }
 
     .hero-actions {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      justify-content: flex-end;
-      position: relative;
-      z-index: 1;
     }
 
-    .hero-btn {
+    .hero-actions .btn {
+      padding: 14px 18px;
+      min-width: 180px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .btn.primary {
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+    }
+
+    .btn.secondary {
+      background: linear-gradient(90deg, rgba(83,221,255,0.14), rgba(139,92,255,0.14));
+    }
+
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      border-radius: 24px;
+      padding: 22px;
+    }
+
+    .panel h3,
+    .info-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+    }
+
+    .panel p,
+    .info-card p,
+    .mini-card span {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.96rem;
+    }
+
+    .social-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .social-card {
+      border-radius: 18px;
+      padding: 16px;
       text-decoration: none;
       color: white;
-      padding: 16px 22px;
-      min-width: 190px;
-      border-radius: 16px;
-      font-weight: 700;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,.08);
-      transition: .22s ease;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
 
-    .hero-btn:hover { transform: translateY(-2px); }
-    .hero-btn.primary {
-      background: linear-gradient(90deg, #8f3cff, #ff4fd8);
-      box-shadow: 0 0 24px rgba(255,79,216,.22);
+    .social-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 14px rgba(139,92,255,0.10);
     }
-    .hero-btn.secondary { background: rgba(255,255,255,.03); }
+
+    .icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      font-size: 1.3rem;
+    }
+
+    .icon.tiktok { background: linear-gradient(135deg, rgba(255,92,207,0.22), rgba(83,221,255,0.16)); }
+    .icon.discord { background: linear-gradient(135deg, rgba(139,92,255,0.24), rgba(52,245,161,0.14)); }
+
+    .social-copy strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .social-copy span { color: var(--muted); font-size: 0.9rem; }
+
+    .section {
+      margin-top: 18px;
+    }
 
     .section-title {
       display: flex;
       align-items: center;
       gap: 12px;
-      font-size: 1.55rem;
+      font-size: 1.45rem;
       font-weight: 800;
-      margin: 10px 0 16px;
+      margin-bottom: 16px;
     }
 
     .section-title::before {
       content: "";
-      width: 6px;
-      height: 28px;
+      width: 7px;
+      height: 26px;
       border-radius: 999px;
       background: linear-gradient(180deg, var(--purple), var(--pink));
-      box-shadow: 0 0 16px rgba(255,79,216,.34);
     }
 
-    .grid-4,
-    .grid-3,
-    .action-grid {
+    .content-grid {
       display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
       gap: 18px;
     }
 
-    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; }
-    .action-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-
-    .stat-card {
-      border-radius: 22px;
-      padding: 20px;
-      min-height: 158px;
-      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-    }
-
-    .stat-card:hover,
-    .action-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 18px rgba(155,77,255,.12);
-      border-color: rgba(255,255,255,.08);
-    }
-
-    .stat-head {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      margin-bottom: 16px;
-    }
-
-    .stat-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, rgba(155,77,255,.32), rgba(255,79,216,.16));
-      color: #f7deff;
-      font-size: 1.3rem;
-      flex: 0 0 auto;
-    }
-
-    .mini-label {
-      color: var(--soft);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-size: .82rem;
-      margin-bottom: 6px;
-    }
-
-    .stat-card h4 {
-      font-size: 1.25rem;
-      margin-bottom: 8px;
-    }
-
-    .stat-card p,
-    .stat-card span { color: var(--muted); line-height: 1.55; }
-
-    .live-line {
-      margin-top: 10px;
-      color: var(--cyan);
-      font-size: .95rem;
-    }
-
-    .metric-value {
-      font-size: 2.8rem;
-      color: var(--purple);
-      font-weight: 800;
-      line-height: 1;
-      margin: 12px 0 10px;
-    }
-
-    .section-shell {
+    .info-card {
       border-radius: 24px;
-      padding: 18px;
-      margin-top: 24px;
+      padding: 22px;
     }
 
-    .action-card {
-      border-radius: 20px;
-      padding: 22px 18px;
-      min-height: 150px;
-      background: linear-gradient(180deg, rgba(29,14,46,.9), rgba(15,9,28,.94));
-      border: 1px solid rgba(155,77,255,.18);
-      display: grid;
-      place-items: center;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      transition: .22s ease;
-    }
-
-    .action-card::before {
-      content: "";
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,79,216,.48);
-      left: 14px;
-      top: 22px;
-      box-shadow: 210px 14px 0 rgba(155,77,255,.42), 40px 104px 0 rgba(255,79,216,.34);
-    }
-
-    .action-icon {
-      font-size: 2rem;
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-bottom: 16px;
-      color: var(--pink);
     }
 
-    .action-card h5 {
-      font-size: 1.15rem;
+    .tab-btn {
+      padding: 11px 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(90deg, rgba(255,92,207,0.18), rgba(83,221,255,0.14));
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .chip {
+      padding: 8px 13px;
+      color: var(--cyan);
+      font-size: 0.9rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .feature-card,
+    .mini-card {
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .feature-card strong,
+    .mini-card strong {
+      display: block;
       margin-bottom: 6px;
     }
 
-    .action-card p {
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: .92rem;
-      max-width: 220px;
+    .feature-card span { color: var(--muted); line-height: 1.6; font-size: 0.92rem; }
+
+    .mini-stack {
+      display: grid;
+      gap: 14px;
     }
 
     .footer-bar {
-      position: fixed;
-      left: var(--sidebar-w);
-      right: 0;
-      bottom: 0;
-      padding: 16px 22px;
-      border-top: 1px solid rgba(155,77,255,.18);
+      margin-top: 18px;
+      border-radius: 22px;
+      padding: 16px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
-      z-index: 10;
-      background: rgba(8,6,18,.98);
+      gap: 14px;
     }
 
-    .footer-copy {
-      color: var(--muted);
-      font-size: .94rem;
-    }
-
+    .footer-copy { color: var(--muted); }
     .footer-copy strong { color: var(--pink); }
+    .footer-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
-    .footer-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+    @keyframes drift {
+      0% { transform: translate3d(0,0,0) scale(1); }
+      100% { transform: translate3d(2%,-2%,0) scale(1.04); }
     }
 
-    .footer-btn {
-      text-decoration: none;
-      color: white;
-      padding: 14px 20px;
-      min-width: 158px;
-      border-radius: 16px;
-      text-align: center;
-      font-weight: 700;
-      border: 1px solid rgba(255,255,255,.08);
-      transition: .22s ease;
+    @keyframes twinkle {
+      0%,100% { opacity: 0.45; }
+      50% { opacity: 0.7; }
     }
 
-    .footer-btn:hover { transform: translateY(-2px); }
-    .footer-btn.secondary { background: rgba(255,255,255,.03); }
-    .footer-btn.primary {
-      background: linear-gradient(90deg, #8f3cff, #ff4fd8);
-      box-shadow: 0 0 18px rgba(255,79,216,.16);
+    @keyframes floatOrb {
+      0% { transform: translateY(0); opacity: 0; }
+      10% { opacity: 0.35; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-115vh); opacity: 0; }
     }
 
-    @keyframes twinkle { 0%,100%{opacity:.28;} 50%{opacity:.5;} }
-
-    @media (max-width: 1240px) {
-      .grid-4,
-      .action-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .grid-3 { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .hero { flex-direction: column; align-items: flex-start; }
-      .hero-actions { justify-content: flex-start; }
+    @media (max-width: 1020px) {
+      .layout,
+      .content-grid { grid-template-columns: 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 980px) {
-      .app { grid-template-columns: 1fr; }
-      .sidebar {
-        position: relative;
-        height: auto;
-        min-height: unset;
-      }
-      .footer-bar {
-        position: static;
-        left: 0;
-        margin-top: 24px;
-        border-radius: 22px;
-      }
-      .main { padding-bottom: 24px; }
-      .topbar { flex-direction: column; align-items: flex-start; }
-      .top-right { justify-content: flex-start; }
-    }
-
-    @media (max-width: 680px) {
-      .main { padding: 16px 14px 24px; }
-      .top-left h2 { font-size: 1.55rem; }
-      .hero h3 { font-size: 2rem; }
-      .grid-4,
-      .grid-3,
-      .action-grid { grid-template-columns: 1fr; }
+    @media (max-width: 720px) {
+      .container { width: min(100% - 14px, var(--maxw)); }
+      .topbar,
+      .hero,
+      .panel,
+      .info-card,
+      .footer-bar { border-radius: 20px; }
+      .topbar { flex-direction: column; align-items: stretch; }
+      .nav,
       .hero-actions,
-      .footer-actions { width: 100%; }
-      .hero-btn,
-      .footer-btn,
-      .chip-btn { width: 100%; }
+      .tabs,
+      .footer-actions { display: grid; }
+      .btn,
+      .tab-btn { width: 100%; text-align: center; }
+      .hero { padding: 22px 18px; }
+      .hero-stats { grid-template-columns: 1fr; }
       .footer-bar { flex-direction: column; align-items: stretch; }
-      .brand-copy h1 { font-size: 1.35rem; }
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <aside class="sidebar">
-      <div class="side-top">
-        <div class="brand">
-          <div class="brand-mark"></div>
-          <div class="brand-copy">
-            <h1>WIZMALEDITS</h1>
-            <p>edit control</p>
-          </div>
-        </div>
-        <a class="discord-btn" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">💬 Join Discord</a>
-      </div>
-
-      <nav class="nav">
-        <a class="nav-item active" href="#dashboard">
-          <div class="nav-left"><div class="nav-ico">⌂</div><span>Dashboard</span></div>
-        </a>
-        <a class="nav-item" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">
-          <div class="nav-left"><div class="nav-ico">⚡</div><span>TikTok</span></div>
-          <div class="nav-badge">8</div>
-        </a>
-        <a class="nav-item" href="#overview">
-          <div class="nav-left"><div class="nav-ico">▣</div><span>Overview</span></div>
-          <div class="nav-badge">10</div>
-        </a>
-        <a class="nav-item" href="#stats">
-          <div class="nav-left"><div class="nav-ico">✸</div><span>Stats</span></div>
-          <div class="nav-badge">10</div>
-        </a>
-        <a class="nav-item" href="#actions">
-          <div class="nav-left"><div class="nav-ico">◔</div><span>Actions</span></div>
-          <div class="nav-badge">13</div>
-        </a>
-        <a class="nav-item" href="#about">
-          <div class="nav-left"><div class="nav-ico">ⓘ</div><span>About</span></div>
-        </a>
-      </nav>
-
-      <div class="side-bottom">
-        <strong>30</strong>
-        <span>active</span>
-      </div>
-    </aside>
-
-    <main class="main" id="dashboard">
-      <div class="topbar">
-        <div class="top-left">
-          <h2>Dashboard</h2>
-          <div class="chip-btn">Profile: <strong>WIZMALEDITS</strong> &nbsp; Max: <strong>1000Hz</strong></div>
-        </div>
-        <div class="top-right">
-          <div class="status-box">System Latency<strong>Low</strong></div>
-          <div class="status-box live">Status<strong>Optimized</strong></div>
-        </div>
-      </div>
-
-      <section class="hero">
-        <div class="hero-copy">
-          <div class="eyebrow">creator control center</div>
-          <h3>Welcome to WIZMALEDITS</h3>
-          <p>Not a copy of the app you showed — just the same level of clean, dark, premium dashboard energy. This version is redesigned specifically for your anime edit brand with stronger glow, better layout balance, smoother cards, and a much better PC look while still working cleanly on mobile.</p>
-        </div>
-        <div class="hero-actions">
-          <a class="hero-btn primary" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">✈ Open TikTok</a>
-          <a class="hero-btn secondary" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">▥ Join Community</a>
-        </div>
-      </section>
-
-      <div class="section-title" id="overview">Creator Overview</div>
-      <section class="grid-4">
-        <div class="stat-card">
-          <div class="stat-head">
-            <div class="stat-icon">◉</div>
-            <div>
-              <div class="mini-label">Profile</div>
-              <h4>Unknown Mouse</h4>
-            </div>
-          </div>
-          <span>Main creator profile loaded.</span>
-          <div class="live-line">● 1000Hz Max</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-head">
-            <div class="stat-icon">▣</div>
-            <div>
-              <div class="mini-label">Graphics</div>
-              <h4>Anime Visuals</h4>
-            </div>
-          </div>
-          <span>Scanning clean transitions and style.</span>
-          <div class="live-line">● Synced</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-head">
-            <div class="stat-icon">✸</div>
-            <div>
-              <div class="mini-label">Processor</div>
-              <h4>Creator Engine</h4>
-            </div>
-          </div>
-          <span>Dark dashboard theme online.</span>
-          <div class="live-line">● Stable</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-head">
-            <div class="stat-icon">▤</div>
-            <div>
-              <div class="mini-label">Memory</div>
-              <h4>System Memory</h4>
-            </div>
-          </div>
-          <span>Galaxy glow and cards active.</span>
-          <div class="live-line">● Smooth</div>
-        </div>
-      </section>
-
-      <section class="grid-3" id="stats">
-        <div class="stat-card">
-          <div class="mini-label">Active Tweaks</div>
-          <div class="metric-value">30</div>
-          <div class="live-line">Ready to optimize</div>
-        </div>
-        <div class="stat-card">
-          <div class="mini-label">System Status</div>
-          <h4 style="color:var(--pink); margin-top:14px; font-size:2rem;">Optimized</h4>
-          <div class="live-line">Awaiting activation</div>
-        </div>
-        <div class="stat-card">
-          <div class="mini-label">Performance</div>
-          <div class="metric-value">150%</div>
-          <div class="live-line">+60% boost</div>
-        </div>
-      </section>
-
-      <div class="section-shell" id="actions">
-        <div class="section-title">Quick Actions</div>
-        <div class="action-grid">
-          <div class="action-card">
-            <div>
-              <div class="action-icon">✈</div>
-              <h5>Apply All</h5>
-              <p>Push the full WIZMALEDITS dashboard styling and creator energy.</p>
-            </div>
-          </div>
-          <div class="action-card">
-            <div>
-              <div class="action-icon">↻</div>
-              <h5>Reset All</h5>
-              <p>Clear changes and rebuild the vibe from scratch.</p>
-            </div>
-          </div>
-          <div class="action-card">
-            <div>
-              <div class="action-icon">◫</div>
-              <h5>Restore Point</h5>
-              <p>Keep your design safe before trying new layout ideas.</p>
-            </div>
-          </div>
-          <div class="action-card">
-            <div>
-              <div class="action-icon">‼</div>
-              <h5>Measure Flow</h5>
-              <p>Track how smooth, clean, and premium the page feels.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bar" id="about">
-        <div class="footer-copy">Status: <strong>Optimized</strong> | Active: <strong>30</strong> tweaks</div>
-        <div class="footer-actions">
-          <a class="footer-btn secondary" href="#dashboard">↻ Reset View</a>
-          <a class="footer-btn primary" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">✓ Apply Changes</a>
-        </div>
-      </div>
-    </main>
+  <div class="bg-blobs"></div>
+  <div class="bg-stars"></div>
+  <div class="bg-grid"></div>
+  <div class="floating-orbs">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
   </div>
+
+  <div class="container">
+    <div class="topbar reveal">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <h1>WIZMALEDITS</h1>
+          <p>lighter colorful redesign</p>
+        </div>
+      </div>
+      <div class="nav">
+        <a class="btn" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">TikTok</a>
+        <a class="btn" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a class="btn" href="#about">About</a>
+      </div>
+    </div>
+
+    <div class="layout">
+      <section class="hero reveal">
+        <div class="eyebrow">fresh and lightweight</div>
+        <h2>New colorful design, but way easier on your PC.</h2>
+        <p>This version keeps the colorful style and smooth feel, but removes the heavier effects that were likely causing the crashes. It is simpler, cleaner, and much lighter while still feeling custom.</p>
+
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>199</strong><span>Following</span></div>
+          <div class="hero-stat"><strong>1140</strong><span>Followers</span></div>
+          <div class="hero-stat"><strong>134.1K</strong><span>Likes</span></div>
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">Open TikTok</a>
+          <a class="btn secondary" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">Join Discord</a>
+        </div>
+      </section>
+
+      <div class="stack reveal">
+        <div class="panel">
+          <h3>Quick links</h3>
+          <p>Your main platforms in one place.</p>
+          <div class="social-grid">
+            <a class="social-card" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">
+              <div class="icon tiktok">♪</div>
+              <div class="social-copy">
+                <strong>TikTok</strong>
+                <span>@wizmaledits • edits and clips</span>
+              </div>
+            </a>
+            <a class="social-card" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">
+              <div class="icon discord">✦</div>
+              <div class="social-copy">
+                <strong>Discord</strong>
+                <span>editing help and community</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Why this version</h3>
+          <p>It uses fewer animated layers, less blur, and fewer visual effects. That should stop the crashing while still looking good on both PC and mobile.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="section reveal" id="about">
+      <div class="section-title">About WIZMALEDITS</div>
+      <div class="content-grid">
+        <div class="info-card">
+          <div class="tabs">
+            <button class="tab-btn active" onclick="showInfo('about', this)">About Me</button>
+            <button class="tab-btn" onclick="showInfo('channel', this)">My Channel</button>
+            <button class="tab-btn" onclick="showInfo('editing', this)">Editing</button>
+          </div>
+
+          <div id="infoBox">
+            <h3>About Me</h3>
+            <p>I’m WIZMALEDITS and I make anime edits with stronger emotion, cleaner motion, and a colorful style that feels more alive. This lighter version is built to stay smooth without overloading your browser.</p>
+            <div class="chips">
+              <span class="chip">Anime Edits</span>
+              <span class="chip">Lightweight</span>
+              <span class="chip">Colorful Glow</span>
+            </div>
+            <div class="feature-grid">
+              <div class="feature-card"><strong>Look</strong><span>Bright colors and clean panels without too much visual weight.</span></div>
+              <div class="feature-card"><strong>Feel</strong><span>Smoother and easier on performance.</span></div>
+              <div class="feature-card"><strong>Goal</strong><span>Keep it stylish without crashing your PC.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mini-stack">
+          <div class="mini-card">
+            <strong>Desktop</strong>
+            <span>Balanced two-column layout with cleaner spacing.</span>
+          </div>
+          <div class="mini-card">
+            <strong>Mobile</strong>
+            <span>Everything stacks cleanly and buttons go full width.</span>
+          </div>
+          <div class="mini-card">
+            <strong>Performance</strong>
+            <span>Much fewer animations and less blur than before.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-bar reveal">
+      <div class="footer-copy">Status: <strong>lighter rebuild</strong> • Style: <strong>colorful and smooth</strong></div>
+      <div class="footer-actions">
+        <a class="btn" href="#">Back to Top</a>
+        <a class="btn" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">Visit TikTok</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sections = {
+      about: {
+        title: 'About Me',
+        text: 'I’m WIZMALEDITS and I make anime edits with stronger emotion, cleaner motion, and a colorful style that feels more alive. This lighter version is built to stay smooth without overloading your browser.',
+        chips: ['Anime Edits', 'Lightweight', 'Colorful Glow'],
+        features: [
+          { title: 'Look', text: 'Bright colors and clean panels without too much visual weight.' },
+          { title: 'Feel', text: 'Smoother and easier on performance.' },
+          { title: 'Goal', text: 'Keep it stylish without crashing your PC.' }
+        ]
+      },
+      channel: {
+        title: 'My Channel',
+        text: 'My channel focuses on anime edits, strong scenes, and visual moments that stand out. This layout supports that brand without trying to be too heavy or too complicated.',
+        chips: ['TikTok Creator', 'Anime Focus', 'Smooth Motion'],
+        features: [
+          { title: 'Content', text: 'Edits, clips, transitions, and atmosphere.' },
+          { title: 'Audience', text: 'People who like anime energy and polished visuals.' },
+          { title: 'Purpose', text: 'A cleaner creator page that is easy to use.' }
+        ]
+      },
+      editing: {
+        title: 'Editing',
+        text: 'Editing is still a huge part of the brand, so the Discord matters. It gives people a place to get help, share work, improve, and stay connected.',
+        chips: ['Editing Help', 'Feedback', 'Community'],
+        features: [
+          { title: 'Help', text: 'Questions, tips, and learning from other editors.' },
+          { title: 'Feedback', text: 'Post edits and get opinions.' },
+          { title: 'Community', text: 'Build a real space around the account.' }
+        ]
+      }
+    };
+
+    function showInfo(key, button) {
+      const section = sections[key];
+      const infoBox = document.getElementById('infoBox');
+      infoBox.innerHTML = `
+        <h3>${section.title}</h3>
+        <p>${section.text}</p>
+        <div class="chips">
+          ${section.chips.map(chip => `<span class="chip">${chip}</span>`).join('')}
+        </div>
+        <div class="feature-grid">
+          ${section.features.map(item => `
+            <div class="feature-card">
+              <strong>${item.title}</strong>
+              <span>${item.text}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
