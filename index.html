@@ -3,27 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#090814" />
+  <meta name="theme-color" content="#6f1ed6" />
   <title>WIZMALEDITS</title>
   <style>
     :root {
-      --bg-1: #060611;
-      --bg-2: #0a1020;
-      --bg-3: #0d1830;
-      --panel: rgba(15, 18, 34, 0.72);
-      --panel-strong: rgba(17, 21, 40, 0.88);
-      --line: rgba(255, 255, 255, 0.1);
-      --text: #ffffff;
-      --muted: #cfd6f6;
-      --soft: #9aa7d8;
-      --pink: #ff49d6;
-      --cyan: #59ecff;
-      --violet: #8c68ff;
-      --maxw: 1180px;
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
-      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --bg1: #5c12c7;
+      --bg2: #7d2bff;
+      --bg3: #9a4dff;
+      --white: #ffffff;
+      --soft: rgba(255,255,255,0.82);
+      --line: rgba(255,255,255,0.2);
+      --pink-glow: rgba(255, 66, 214, 0.9);
     }
 
     * {
@@ -39,965 +29,521 @@
 
     body {
       min-height: 100vh;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 15% 20%, rgba(140,104,255,0.18), transparent 18%),
-        radial-gradient(circle at 82% 22%, rgba(89,236,255,0.12), transparent 16%),
-        radial-gradient(circle at 62% 78%, rgba(255,73,214,0.12), transparent 16%),
-        linear-gradient(140deg, var(--bg-1) 0%, var(--bg-2) 48%, var(--bg-3) 100%);
+      color: var(--white);
       overflow-x: hidden;
+      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 45%, var(--bg3) 100%);
       position: relative;
     }
 
-    .page-bg,
-    .page-stars,
-    .page-glow {
-      position: fixed;
+    .page {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .stars,
+    .stars::before,
+    .stars::after {
+      position: absolute;
       inset: 0;
+      content: "";
       pointer-events: none;
     }
 
-    .page-bg {
-      z-index: -4;
-      filter: blur(70px);
-      opacity: 0.85;
-    }
-
-    .page-bg::before,
-    .page-bg::after {
-      content: "";
-      position: absolute;
-      inset: -12%;
-      animation: drift 18s ease-in-out infinite alternate;
-    }
-
-    .page-bg::before {
-      background:
-        radial-gradient(circle at 18% 26%, rgba(140,104,255,0.25), transparent 16%),
-        radial-gradient(circle at 78% 18%, rgba(89,236,255,0.14), transparent 14%),
-        radial-gradient(circle at 60% 74%, rgba(255,73,214,0.12), transparent 16%);
-    }
-
-    .page-bg::after {
-      animation-duration: 24s;
-      background:
-        radial-gradient(circle at 20% 80%, rgba(89,236,255,0.08), transparent 12%),
-        radial-gradient(circle at 88% 72%, rgba(255,73,214,0.08), transparent 12%),
-        radial-gradient(circle at 52% 10%, rgba(140,104,255,0.12), transparent 13%);
-    }
-
-    .page-stars {
-      z-index: -3;
+    .stars {
+      z-index: 0;
       background-image:
-        radial-gradient(circle at 10% 12%, rgba(255,255,255,0.95) 0 1px, transparent 2px),
-        radial-gradient(circle at 22% 78%, rgba(255,255,255,0.7) 0 1px, transparent 2px),
-        radial-gradient(circle at 40% 32%, rgba(255,255,255,0.75) 0 1px, transparent 2px),
-        radial-gradient(circle at 58% 22%, rgba(255,255,255,0.55) 0 1px, transparent 2px),
-        radial-gradient(circle at 72% 66%, rgba(255,255,255,0.7) 0 1px, transparent 2px),
-        radial-gradient(circle at 88% 28%, rgba(255,255,255,0.55) 0 1px, transparent 2px),
-        radial-gradient(circle at 94% 82%, rgba(255,255,255,0.45) 0 1px, transparent 2px);
-      background-size: 320px 320px;
-      opacity: 0.72;
-      animation: twinkle 7s linear infinite;
+        radial-gradient(circle at 8% 28%, rgba(255,255,255,0.95) 0 2px, transparent 8px),
+        radial-gradient(circle at 18% 40%, rgba(255,255,255,0.9) 0 2px, transparent 9px),
+        radial-gradient(circle at 30% 22%, rgba(255,255,255,0.85) 0 2px, transparent 10px),
+        radial-gradient(circle at 45% 16%, rgba(255,255,255,0.92) 0 2px, transparent 10px),
+        radial-gradient(circle at 55% 35%, rgba(255,255,255,0.95) 0 2px, transparent 10px),
+        radial-gradient(circle at 67% 20%, rgba(255,255,255,0.85) 0 2px, transparent 10px),
+        radial-gradient(circle at 78% 30%, rgba(255,255,255,0.95) 0 2px, transparent 10px),
+        radial-gradient(circle at 85% 48%, rgba(255,255,255,0.82) 0 2px, transparent 10px),
+        radial-gradient(circle at 14% 70%, rgba(255,255,255,0.92) 0 2px, transparent 10px),
+        radial-gradient(circle at 28% 82%, rgba(255,255,255,0.88) 0 2px, transparent 10px),
+        radial-gradient(circle at 52% 76%, rgba(255,255,255,0.95) 0 2px, transparent 10px),
+        radial-gradient(circle at 74% 80%, rgba(255,255,255,0.9) 0 2px, transparent 10px),
+        radial-gradient(circle at 90% 72%, rgba(255,255,255,0.82) 0 2px, transparent 10px);
+      filter: drop-shadow(0 0 8px rgba(170,255,255,0.9));
+      animation: twinkle 5s linear infinite;
     }
 
-    .page-glow {
-      z-index: -2;
-      background:
-        linear-gradient(120deg, transparent 0%, rgba(89,236,255,0.05) 28%, transparent 48%),
-        linear-gradient(150deg, transparent 8%, rgba(255,73,214,0.05) 38%, transparent 64%);
-      filter: blur(50px);
-      opacity: 0.7;
-      animation: glowShift 14s ease-in-out infinite alternate;
+    .stars::before {
+      background-image:
+        radial-gradient(circle at 22% 10%, rgba(255,255,255,0.6) 0 1px, transparent 7px),
+        radial-gradient(circle at 38% 30%, rgba(255,255,255,0.65) 0 1px, transparent 7px),
+        radial-gradient(circle at 60% 12%, rgba(255,255,255,0.55) 0 1px, transparent 7px),
+        radial-gradient(circle at 73% 58%, rgba(255,255,255,0.65) 0 1px, transparent 7px),
+        radial-gradient(circle at 88% 18%, rgba(255,255,255,0.6) 0 1px, transparent 7px),
+        radial-gradient(circle at 10% 54%, rgba(255,255,255,0.6) 0 1px, transparent 7px),
+        radial-gradient(circle at 48% 60%, rgba(255,255,255,0.55) 0 1px, transparent 7px),
+        radial-gradient(circle at 84% 90%, rgba(255,255,255,0.65) 0 1px, transparent 7px);
+      filter: drop-shadow(0 0 6px rgba(170,255,255,0.7));
+      animation: twinkle 7s linear infinite reverse;
     }
 
-    .loader {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: grid;
-      place-items: center;
-      background:
-        radial-gradient(circle at center, rgba(24, 26, 54, 0.95), rgba(7, 8, 18, 0.98));
-      transition: opacity 0.8s ease, visibility 0.8s ease;
+    .stars::after {
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%);
+      background-size: 220px 100%;
+      opacity: 0.3;
     }
 
-    .loader.hide {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .loader-card {
-      width: min(420px, calc(100% - 32px));
-      padding: 34px 28px;
-      border-radius: 28px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
-      text-align: center;
-    }
-
-    .loader-ring {
-      width: 88px;
-      height: 88px;
-      margin: 0 auto 18px;
+    .planet,
+    .planet-small,
+    .planet-tiny {
+      position: absolute;
       border-radius: 50%;
-      padding: 4px;
-      background: conic-gradient(var(--pink), var(--cyan), var(--violet), var(--pink));
-      animation: spin 2.5s linear infinite;
+      background: radial-gradient(circle at 35% 30%, #f6ddff 0%, #ebc9ff 38%, #d58cff 78%, #ff35c8 100%);
+      box-shadow: 0 0 35px rgba(255, 72, 214, 0.9), 0 0 90px rgba(255, 72, 214, 0.55);
+      z-index: 0;
     }
 
-    .loader-ring span {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: #090814;
-      box-shadow: inset 0 0 22px rgba(255,255,255,0.05);
+    .planet {
+      width: 470px;
+      height: 470px;
+      left: -140px;
+      bottom: -170px;
+      animation: floatPlanet 8s ease-in-out infinite alternate;
     }
 
-    .loader-card h2 {
-      font-size: 1.8rem;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-      text-transform: uppercase;
+    .planet-small {
+      width: 280px;
+      height: 280px;
+      right: -70px;
+      top: 220px;
+      animation: floatPlanet 7s ease-in-out infinite alternate-reverse;
     }
 
-    .loader-card p {
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 18px;
+    .planet-tiny {
+      width: 120px;
+      height: 120px;
+      right: 65px;
+      bottom: 85px;
+      animation: floatPlanet 6s ease-in-out infinite alternate;
     }
 
-    .loader-bar {
-      height: 8px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .loader-bar::before {
-      content: "";
-      display: block;
-      height: 100%;
-      width: 40%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--pink), var(--cyan));
-      animation: loadBar 1.4s ease-in-out infinite;
-    }
-
-    .container {
-      width: min(var(--maxw), calc(100% - 24px));
-      margin: 0 auto;
-      padding: 20px 0 44px;
+    .overlay {
       position: relative;
       z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 28px 42px 40px;
     }
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
-    .reveal.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .shell,
-    .panel,
-    .hero-card,
-    .social-card,
-    .info-card,
-    .mini-panel {
-      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-    }
-
-    .shell {
-      border-radius: var(--radius-xl);
-      padding: 14px;
-    }
-
-    .topbar {
+    .navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      padding: 12px 14px;
-      border-radius: 18px;
-      margin-bottom: 18px;
+      gap: 20px;
+      margin-bottom: 40px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      min-width: 0;
+      gap: 16px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
-    .brand-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--pink), var(--cyan));
-      box-shadow: 0 0 14px rgba(255,73,214,0.35), 0 0 18px rgba(89,236,255,0.22);
-      animation: pulse 2s ease-in-out infinite;
+    .logo {
+      width: 42px;
+      height: 56px;
+      position: relative;
       flex: 0 0 auto;
     }
 
-    .brand-copy strong {
-      display: block;
-      font-size: 0.95rem;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
+    .logo::before,
+    .logo::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
     }
 
-    .brand-copy span {
-      display: block;
-      color: var(--soft);
-      font-size: 0.9rem;
+    .logo::before {
+      top: 0;
+      border-bottom: 28px solid white;
+    }
+
+    .logo::after {
+      bottom: 0;
+      border-top: 28px solid white;
+    }
+
+    .logo span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      background: var(--bg1);
+      border-radius: 2px;
+      z-index: 1;
+    }
+
+    .brand-text {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.95);
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .nav-links {
       display: flex;
+      align-items: center;
+      gap: 40px;
       flex-wrap: wrap;
-      gap: 10px;
       justify-content: flex-end;
     }
 
-    .nav-links a,
-    .hero-actions a,
-    .tab-btn,
-    .back-top {
-      position: relative;
-      overflow: hidden;
+    .nav-links a {
+      color: rgba(255,255,255,0.9);
       text-decoration: none;
-      color: white;
-      border: 1px solid rgba(255,255,255,0.11);
-      border-radius: 999px;
-      padding: 11px 15px;
-      background: rgba(255,255,255,0.05);
-      font-weight: 700;
-      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
-      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 0.95rem;
+      transition: transform 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
     }
 
-    .nav-links a::before,
-    .hero-actions a::before,
-    .tab-btn::before,
-    .back-top::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -120%;
-      width: 120%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-      transition: left 0.5s ease;
-    }
-
-    .nav-links a:hover::before,
-    .hero-actions a:hover::before,
-    .tab-btn:hover::before,
-    .back-top:hover::before {
-      left: 120%;
-    }
-
-    .nav-links a:hover,
-    .hero-actions a:hover,
-    .tab-btn:hover,
-    .back-top:hover {
+    .nav-links a:hover {
       transform: translateY(-2px);
-      border-color: rgba(255,255,255,0.2);
-      box-shadow: 0 0 18px rgba(255,73,214,0.16), 0 0 18px rgba(89,236,255,0.1);
+      opacity: 1;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
     }
 
-    .app-grid {
+    .hero {
+      flex: 1;
       display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
+      place-items: center;
+      text-align: center;
+      padding: 30px 16px 70px;
+    }
+
+    .hero-inner {
+      max-width: 680px;
+      display: grid;
       gap: 18px;
+      animation: fadeUp 0.9s ease;
     }
 
-    .hero-card {
-      border-radius: var(--radius-xl);
-      padding: 28px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent 10%, rgba(255,255,255,0.06) 48%, transparent 52%, transparent 90%);
-      transform: translateX(-120%);
-      animation: sheen 8s linear infinite;
-      pointer-events: none;
-    }
-
-    .hero-top {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 24px;
-      align-items: center;
-    }
-
-    .pfp-stack {
-      display: grid;
-      gap: 14px;
-      justify-items: center;
-    }
-
-    .pfp-wrap {
-      width: 170px;
-      height: 170px;
-      border-radius: 50%;
-      padding: 5px;
-      background: conic-gradient(var(--pink), var(--cyan), var(--violet), var(--pink));
-      box-shadow: 0 0 26px rgba(255,73,214,0.22), 0 0 34px rgba(89,236,255,0.15);
-      animation: spin 10s linear infinite;
-    }
-
-    .pfp {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      border-radius: 50%;
-      border: 4px solid rgba(7,8,18,0.95);
-      background: #000;
-    }
-
-    .status-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 13px;
-      border-radius: 999px;
-      color: var(--muted);
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      font-size: 0.92rem;
-    }
-
-    .status-chip span {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--pink), var(--cyan));
-      box-shadow: 0 0 10px rgba(255,73,214,0.3), 0 0 12px rgba(89,236,255,0.22);
-      animation: pulse 1.7s ease-in-out infinite;
-    }
-
-    .hero-copy {
-      display: grid;
-      gap: 14px;
-    }
-
-    .eyebrow {
-      color: var(--cyan);
-      font-size: 0.88rem;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      font-size: clamp(2.5rem, 6vw, 4.6rem);
-      line-height: 0.95;
+    .hero-title {
+      font-size: clamp(3rem, 7vw, 5.6rem);
+      line-height: 0.92;
       font-weight: 900;
-      letter-spacing: 1.4px;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      text-shadow: 0 0 10px rgba(255,255,255,0.76), 0 0 18px rgba(255,73,214,0.4), 0 0 28px rgba(89,236,255,0.14);
+      text-shadow: 0 0 18px rgba(255,255,255,0.22);
     }
 
     .hero-sub {
-      color: var(--muted);
-      font-size: 1.02rem;
-      line-height: 1.7;
-      max-width: 760px;
-    }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 4px;
-    }
-
-    .stat-box {
-      padding: 14px 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
-    }
-
-    .stat-box:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 16px rgba(140,104,255,0.08);
-    }
-
-    .stat-box strong {
-      display: block;
-      color: var(--cyan);
-      font-size: 1.22rem;
-      margin-bottom: 3px;
-    }
-
-    .stat-box span {
-      color: var(--soft);
-      font-size: 0.9rem;
-    }
-
-    .bio-lines {
-      display: grid;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .bio-lines .main {
-      font-size: clamp(1.12rem, 2.2vw, 1.45rem);
-      font-weight: 800;
-    }
-
-    .bio-lines .soft {
-      color: var(--muted);
-      font-size: 1rem;
-    }
-
-    .tag-pill {
-      width: fit-content;
-      padding: 9px 13px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.05);
-      color: var(--cyan);
+      font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+      letter-spacing: 8px;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      font-size: 0.88rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.9);
     }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 4px;
-    }
-
-    .hero-actions .primary {
-      background: linear-gradient(90deg, rgba(255,73,214,0.22), rgba(89,236,255,0.16));
-    }
-
-    .hero-actions .secondary {
-      background: rgba(255,255,255,0.05);
-    }
-
-    .sidebar {
-      display: grid;
-      gap: 18px;
-    }
-
-    .panel {
-      border-radius: var(--radius-xl);
-      padding: 22px;
-    }
-
-    .panel h3 {
-      font-size: 1.18rem;
-      margin-bottom: 10px;
-    }
-
-    .panel p {
-      color: var(--muted);
+    .hero-text {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.2rem;
       line-height: 1.7;
-      font-size: 0.95rem;
+      max-width: 620px;
+      margin: 0 auto;
     }
 
-    .social-grid {
-      display: grid;
+    .hero-text strong {
+      color: white;
+    }
+
+    .cta-row {
+      display: flex;
+      justify-content: center;
       gap: 14px;
-      margin-top: 14px;
+      flex-wrap: wrap;
+      margin-top: 10px;
     }
 
-    .social-card {
-      border-radius: 20px;
-      padding: 18px;
+    .btn {
       text-decoration: none;
       color: white;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
-    }
-
-    .social-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 18px rgba(255,73,214,0.12), 0 0 18px rgba(89,236,255,0.08);
-      border-color: rgba(255,255,255,0.16);
-    }
-
-    .social-card .badge {
-      position: absolute;
-      right: 14px;
-      top: 14px;
-      padding: 6px 9px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.7);
+      padding: 14px 26px;
+      border-radius: 8px;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
-      font-size: 0.72rem;
+      letter-spacing: 2px;
+      font-size: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      background: rgba(255,255,255,0.05);
+      min-width: 180px;
     }
 
-    .social-head {
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 16px rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .btn.primary {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .sections {
       display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 10px;
-    }
-
-    .social-icon {
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      flex: 0 0 auto;
-    }
-
-    .social-icon svg {
-      width: 32px;
-      height: 32px;
-    }
-
-    .tiktok {
-      background: linear-gradient(135deg, rgba(255,73,214,0.22), rgba(89,236,255,0.16));
-    }
-
-    .discord {
-      background: linear-gradient(135deg, rgba(140,104,255,0.24), rgba(89,236,255,0.14));
-    }
-
-    .social-copy h4 {
-      font-size: 1.12rem;
-      margin-bottom: 4px;
-    }
-
-    .social-copy span {
-      color: var(--soft);
-      font-size: 0.9rem;
-    }
-
-    .social-card p {
-      color: var(--muted);
-      line-height: 1.65;
-      font-size: 0.94rem;
-    }
-
-    .content-grid {
-      display: grid;
-      grid-template-columns: 1.12fr 0.88fr;
-      gap: 18px;
-      margin-top: 18px;
-    }
-
-    .info-card {
-      border-radius: var(--radius-xl);
-      padding: 24px;
+      justify-content: center;
+      margin-top: 24px;
     }
 
     .tabs {
       display: flex;
-      flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
+    .tab-btn {
+      border: 1px solid rgba(255,255,255,0.35);
+      color: white;
+      background: rgba(255,255,255,0.05);
+      padding: 10px 16px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .tab-btn:hover,
     .tab-btn.active {
-      background: linear-gradient(90deg, rgba(255,73,214,0.2), rgba(89,236,255,0.14));
-      box-shadow: 0 0 16px rgba(255,73,214,0.12), 0 0 16px rgba(89,236,255,0.08);
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.14);
+      box-shadow: 0 0 12px rgba(255,255,255,0.15);
     }
 
-    .info-body h2 {
-      font-size: 1.7rem;
+    .info-panel {
+      margin: 24px auto 0;
+      max-width: 760px;
+      padding: 24px 26px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    .info-panel h2 {
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       margin-bottom: 10px;
     }
 
-    .info-body p {
-      color: var(--muted);
+    .info-panel p {
+      color: rgba(255,255,255,0.9);
       line-height: 1.8;
       font-size: 1rem;
     }
 
-    .chip-row {
+    .chips {
       display: flex;
-      flex-wrap: wrap;
       gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
       margin-top: 16px;
     }
 
     .chip {
       padding: 8px 13px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.05);
-      color: var(--cyan);
-      font-size: 0.9rem;
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .mini-panel {
-      border-radius: 18px;
-      padding: 16px;
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
-    }
-
-    .mini-panel:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 14px rgba(140,104,255,0.08);
-    }
-
-    .mini-panel strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 1rem;
-    }
-
-    .mini-panel span {
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: 0.92rem;
-    }
-
-    .side-stack {
-      display: grid;
-      gap: 18px;
-    }
-
-    .list-stack {
-      display: grid;
-      gap: 12px;
-      margin-top: 14px;
-    }
-
-    .list-item {
-      padding: 14px 15px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.04);
-    }
-
-    .list-item strong {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 0.98rem;
-    }
-
-    .list-item span {
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: 0.92rem;
-    }
-
-    .site-actions {
-      margin-top: 18px;
-      display: flex;
-      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.06);
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     .footer {
-      margin-top: 16px;
       text-align: center;
-      color: var(--soft);
-      font-size: 0.92rem;
-    }
-
-    @keyframes drift {
-      0% { transform: translate3d(0,0,0) scale(1); }
-      100% { transform: translate3d(2%,-2%,0) scale(1.05); }
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 1px;
+      padding-top: 20px;
+      font-size: 0.9rem;
     }
 
     @keyframes twinkle {
-      0%,100% { opacity: 0.58; }
-      50% { opacity: 0.82; }
+      0%, 100% { opacity: 0.72; }
+      50% { opacity: 1; }
     }
 
-    @keyframes glowShift {
-      0% { transform: translateX(-3%) translateY(0); }
-      100% { transform: translateX(3%) translateY(-2%); }
+    @keyframes floatPlanet {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-14px); }
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes pulse {
-      0%,100% { transform: scale(1); opacity: 0.9; }
-      50% { transform: scale(1.14); opacity: 1; }
-    }
-
-    @keyframes sheen {
-      to { transform: translateX(130%); }
-    }
-
-    @keyframes loadBar {
-      0% { transform: translateX(-130%); }
-      100% { transform: translateX(320%); }
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (max-width: 980px) {
-      .app-grid,
-      .content-grid,
-      .hero-top {
-        grid-template-columns: 1fr;
+      .overlay {
+        padding: 24px 22px 34px;
       }
 
-      .hero-card,
-      .info-card,
-      .panel {
-        padding: 22px;
-      }
-
-      .pfp-stack,
-      .hero-copy,
-      .info-body,
-      .panel {
-        text-align: center;
-      }
-
-      .tag-pill,
-      .hero-actions,
-      .chip-row,
-      .tabs {
-        justify-content: center;
-      }
-
-      .hero-stats,
-      .feature-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 720px) {
-      .container {
-        width: min(100% - 14px, var(--maxw));
-      }
-
-      .shell,
-      .hero-card,
-      .panel,
-      .info-card,
-      .social-card {
-        border-radius: 20px;
-      }
-
-      .topbar {
+      .navbar {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-start;
+        gap: 18px;
       }
 
       .nav-links {
-        justify-content: center;
+        gap: 18px;
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .overlay {
+        padding: 18px 14px 28px;
       }
 
-      .nav-links a,
-      .hero-actions a,
-      .tab-btn,
-      .back-top {
+      .brand {
+        gap: 12px;
+      }
+
+      .brand-text {
+        font-size: 0.9rem;
+      }
+
+      .nav-links {
         width: 100%;
-        text-align: center;
+        gap: 12px;
       }
 
-      .hero-actions,
-      .tabs {
-        display: grid;
+      .nav-links a {
+        font-size: 0.8rem;
       }
 
-      .hero-card,
-      .panel,
-      .info-card {
-        padding: 18px;
+      .hero {
+        padding: 16px 6px 34px;
       }
 
-      .pfp-wrap {
-        width: 146px;
-        height: 146px;
+      .hero-sub {
+        letter-spacing: 4px;
       }
 
-      h1 {
-        font-size: clamp(2.2rem, 11vw, 3.2rem);
+      .hero-text {
+        font-size: 1rem;
+      }
+
+      .planet {
+        width: 300px;
+        height: 300px;
+        left: -100px;
+        bottom: -120px;
+      }
+
+      .planet-small {
+        width: 180px;
+        height: 180px;
+        right: -50px;
+        top: 240px;
+      }
+
+      .planet-tiny {
+        width: 86px;
+        height: 86px;
+        right: 20px;
+        bottom: 90px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .info-panel {
+        padding: 18px 16px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="page-bg"></div>
-  <div class="page-stars"></div>
-  <div class="page-glow"></div>
+  <div class="page">
+    <div class="stars"></div>
+    <div class="planet"></div>
+    <div class="planet-small"></div>
+    <div class="planet-tiny"></div>
 
-  <div class="loader" id="loader">
-    <div class="loader-card">
-      <div class="loader-ring"><span></span></div>
-      <h2>WIZMALEDITS</h2>
-      <p>Loading galaxy interface...</p>
-      <div class="loader-bar"></div>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="shell reveal">
-      <div class="topbar panel">
+    <div class="overlay">
+      <nav class="navbar">
         <div class="brand">
-          <div class="brand-dot"></div>
-          <div class="brand-copy">
-            <strong>WIZMALEDITS</strong>
-            <span>clean galaxy ui • creator landing page</span>
-          </div>
+          <div class="logo"><span></span></div>
+          <div class="brand-text">WIZMALEDITS</div>
         </div>
+
         <div class="nav-links">
+          <a href="#">Home</a>
           <a href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">TikTok</a>
-          <a href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">Discord</a>
+          <a href="#about">About Us</a>
+          <a href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">Contact Us</a>
         </div>
-      </div>
+      </nav>
 
-      <div class="app-grid">
-        <section class="hero-card reveal">
-          <div class="hero-top">
-            <div class="pfp-stack">
-              <div class="pfp-wrap">
-                <img src="crop_pfp.png" alt="WIZMALEDITS profile picture" class="pfp" />
-              </div>
-              <div class="status-chip"><span></span> creator page online</div>
-            </div>
+      <main class="hero">
+        <div class="hero-inner">
+          <h1 class="hero-title">WIZMALEDITS</h1>
+          <div class="hero-sub">Galaxy Background</div>
+          <p class="hero-text">
+            Anime edits, <strong>Darling in the Franxx</strong> vibes, smooth visuals, and a clean creator landing page.
+            This layout is redesigned to match the style of the example you sent, with a centered hero, glowing stars,
+            floating planets, and a brighter purple galaxy theme.
+          </p>
 
-            <div class="hero-copy">
-              <div class="eyebrow">galaxy creator profile</div>
-              <h1>WIZMALEDITS</h1>
-              <p class="hero-sub">A fully revamped clean galaxy-style landing page for your anime edit brand, made to look better on PC while still staying smooth on mobile.</p>
-
-              <div class="hero-stats">
-                <div class="stat-box"><strong>199</strong><span>Following</span></div>
-                <div class="stat-box"><strong>1140</strong><span>Followers</span></div>
-                <div class="stat-box"><strong>134.1K</strong><span>Likes</span></div>
-              </div>
-
-              <div class="bio-lines">
-                <div class="main">Do you all think I made it?</div>
-                <div class="soft">Is it trust I'm not having...</div>
-                <div class="tag-pill">Anime edits • galaxy theme • Zero Two energy</div>
-              </div>
-
-              <div class="hero-actions">
-                <a class="primary" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">Watch on TikTok</a>
-                <a class="secondary" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">Join Discord</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <aside class="sidebar reveal">
-          <div class="panel">
-            <h3>Quick access</h3>
-            <p>Open your main pages fast from this clean side panel.</p>
-            <div class="social-grid">
-              <a class="social-card shell" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">
-                <div class="badge">main</div>
-                <div class="social-head">
-                  <div class="social-icon tiktok">
-                    <svg viewBox="0 0 64 64" aria-hidden="true">
-                      <path d="M37 8c1.4 7.9 6 12.7 14 13.7v8.3c-4.9-.1-9.1-1.4-13-4v15.5C38 51 31.8 56 23.4 56 14.7 56 8 49.4 8 40.8c0-9 7-15.7 16.9-15.7 1.5 0 2.8.1 4 .4v8.6c-1.1-.4-2.2-.6-3.4-.6-4.5 0-7.8 3-7.8 7.3 0 4.1 3 7.1 7.2 7.1 5.1 0 7.4-3.7 7.4-9.1V8h4.7z" fill="currentColor"></path>
-                    </svg>
-                  </div>
-                  <div class="social-copy">
-                    <h4>TikTok</h4>
-                    <span>@wizmaledits</span>
-                  </div>
-                </div>
-                <p>Follow for anime edits, transitions, clips, and new posts.</p>
-              </a>
-
-              <a class="social-card shell" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">
-                <div class="badge">community</div>
-                <div class="social-head">
-                  <div class="social-icon discord">
-                    <svg viewBox="0 0 64 64" aria-hidden="true">
-                      <path d="M53.5 18.7a40.8 40.8 0 0 0-10.2-3.2l-.5 1a37.5 37.5 0 0 0-10.8 0l-.5-1a40.9 40.9 0 0 0-10.2 3.2C14.8 28.4 13 37.8 13.9 47.1a41 41 0 0 0 12.5 6.4l2.7-4.5c-1.5-.5-2.9-1.2-4.2-2 0-.1.1-.1.2-.2 8 3.8 16.7 3.8 24.6 0l.2.2c-1.3.8-2.7 1.5-4.2 2l2.7 4.5a41 41 0 0 0 12.5-6.4c1.1-10.7-1.8-20-7.4-28.4zM26.2 41.4c-2.4 0-4.4-2.2-4.4-4.8s1.9-4.8 4.4-4.8c2.4 0 4.4 2.2 4.4 4.8 0 2.7-1.9 4.8-4.4 4.8zm11.6 0c-2.4 0-4.4-2.2-4.4-4.8s1.9-4.8 4.4-4.8c2.4 0 4.4 2.2 4.4 4.8 0 2.7-1.9 4.8-4.4 4.8z" fill="currentColor"></path>
-                    </svg>
-                  </div>
-                  <div class="social-copy">
-                    <h4>Discord</h4>
-                    <span>editing server</span>
-                  </div>
-                </div>
-                <p>Join for feedback, editing help, updates, and community.</p>
-              </a>
-            </div>
-          </div>
-        </aside>
-      </div>
-
-      <div class="content-grid">
-        <section class="info-card reveal">
-          <div class="tabs">
-            <button class="tab-btn active" onclick="showInfo('about', this)">About Me</button>
-            <button class="tab-btn" onclick="showInfo('channel', this)">About Channel</button>
-            <button class="tab-btn" onclick="showInfo('editing', this)">Editing</button>
-            <button class="tab-btn" onclick="showInfo('brand', this)">Brand</button>
+          <div class="cta-row">
+            <a class="btn primary" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">Get Started</a>
+            <a class="btn" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">Join Discord</a>
           </div>
 
-          <div class="info-body" id="infoBox">
+          <div class="sections" id="about">
+            <div class="tabs">
+              <button class="tab-btn active" onclick="showInfo('about', this)">About Me</button>
+              <button class="tab-btn" onclick="showInfo('channel', this)">My Channel</button>
+              <button class="tab-btn" onclick="showInfo('editing', this)">Editing</button>
+            </div>
+          </div>
+
+          <div class="info-panel" id="infoBox">
             <h2>About Me</h2>
-            <p>I’m WIZMALEDITS and I make anime edits with a cleaner galaxy look, emotional scenes, and stronger overall presentation. This redesign is built to feel premium on PC and still stay smooth and readable on mobile.</p>
-            <div class="chip-row">
+            <p>
+              I’m WIZMALEDITS and I make anime edits with a clean emotional style, stronger presentation,
+              and a galaxy-themed creator page that feels more like a designed landing page than a plain link site.
+            </p>
+            <div class="chips">
               <span class="chip">Anime Edits</span>
-              <span class="chip">Galaxy UI</span>
+              <span class="chip">Galaxy Theme</span>
               <span class="chip">Zero Two Energy</span>
             </div>
-            <div class="feature-grid">
-              <div class="mini-panel"><strong>Style</strong><span>Cleaner layout, softer glow, and a more premium desktop look.</span></div>
-              <div class="mini-panel"><strong>Focus</strong><span>Show your content fast without clutter or messy spacing.</span></div>
-              <div class="mini-panel"><strong>Goal</strong><span>Make your page feel like a real creator brand site.</span></div>
-            </div>
-          </div>
-        </section>
-
-        <div class="side-stack reveal">
-          <div class="panel">
-            <h3>What changed</h3>
-            <p>The whole UI was rebuilt to look cleaner on PC, with better spacing, cleaner panels, a stronger layout, and a smoother galaxy theme.</p>
-            <div class="list-stack">
-              <div class="list-item"><strong>Cleaner desktop layout</strong><span>Balanced two-column design instead of a stretched messy look.</span></div>
-              <div class="list-item"><strong>Loading screen</strong><span>Galaxy-themed loading overlay before the site fades in.</span></div>
-              <div class="list-item"><strong>Safer performance</strong><span>Stylish without stacking too many heavy effects.</span></div>
-            </div>
-          </div>
-
-          <div class="panel">
-            <h3>Mobile polish</h3>
-            <p>Buttons stack better, hero content centers nicely, and panels keep a cleaner flow on smaller screens.</p>
           </div>
         </div>
-      </div>
+      </main>
 
-      <div class="site-actions reveal">
-        <a href="#" class="back-top">Back to top</a>
-      </div>
-
-      <div class="footer reveal">© 2026 WIZMALEDITS • clean galaxy revamp</div>
+      <div class="footer">© 2026 WIZMALEDITS</div>
     </div>
   </div>
 
@@ -1005,43 +551,18 @@
     const sections = {
       about: {
         title: 'About Me',
-        text: 'I’m WIZMALEDITS and I make anime edits with a cleaner galaxy look, emotional scenes, and stronger overall presentation. This redesign is built to feel premium on PC and still stay smooth and readable on mobile.',
-        chips: ['Anime Edits', 'Galaxy UI', 'Zero Two Energy'],
-        features: [
-          { title: 'Style', text: 'Cleaner layout, softer glow, and a more premium desktop look.' },
-          { title: 'Focus', text: 'Show your content fast without clutter or messy spacing.' },
-          { title: 'Goal', text: 'Make your page feel like a real creator brand site.' }
-        ]
+        text: 'I’m WIZMALEDITS and I make anime edits with a clean emotional style, stronger presentation, and a galaxy-themed creator page that feels more like a designed landing page than a plain link site.',
+        chips: ['Anime Edits', 'Galaxy Theme', 'Zero Two Energy']
       },
       channel: {
-        title: 'About Channel',
-        text: 'Your page is all about anime edits, strong visual moments, smoother transitions, and a style that stands out fast. This site now works more like a real creator homepage than a basic link page.',
-        chips: ['TikTok Creator', 'AMV Vibes', 'Anime Focus'],
-        features: [
-          { title: 'Content', text: 'Short edits, motion-heavy moments, and memorable anime scenes.' },
-          { title: 'Audience', text: 'People who like anime emotion, clean edits, and darker visual vibes.' },
-          { title: 'Purpose', text: 'Turn visitors into followers and community members quickly.' }
-        ]
+        title: 'My Channel',
+        text: 'My page is focused on anime edits, visual moments, transitions, and clips that stand out. This version of the website is centered more like a proper hero landing page and matches the purple galaxy style you wanted.',
+        chips: ['TikTok Creator', 'Darling in the Franxx', 'AMV Vibes']
       },
       editing: {
         title: 'Editing',
-        text: 'Editing is a big part of the brand, so the Discord link stays important. It gives people one place to ask questions, get feedback, and connect with other editors while keeping your site useful.',
-        chips: ['Editing Help', 'Feedback', 'Community'],
-        features: [
-          { title: 'Help', text: 'A spot for editing questions, advice, and improvement.' },
-          { title: 'Feedback', text: 'Share work, get opinions, and grow your style.' },
-          { title: 'Community', text: 'Build more than just posts by giving people a place to stay.' }
-        ]
-      },
-      brand: {
-        title: 'Brand',
-        text: 'The whole design is meant to make WIZMALEDITS feel like a stronger creator brand. The cleaner galaxy theme, balanced desktop layout, and loading screen all make it feel more polished and complete.',
-        chips: ['Creator Brand', 'Galaxy Theme', 'Clean UI'],
-        features: [
-          { title: 'Look', text: 'Glass panels, softer glow, premium spacing, and cleaner structure.' },
-          { title: 'Feel', text: 'Smoother, more modern, and less cluttered than before.' },
-          { title: 'Use', text: 'A shareable landing page that actually feels finished.' }
-        ]
+        text: 'Editing is a big part of the brand, so the Discord link stays important. It gives people a place to get feedback, ask questions, and connect with other editors while keeping the site useful.',
+        chips: ['Editing Help', 'Community', 'Feedback']
       }
     };
 
@@ -1052,36 +573,14 @@
       infoBox.innerHTML = `
         <h2>${section.title}</h2>
         <p>${section.text}</p>
-        <div class="chip-row">
+        <div class="chips">
           ${section.chips.map(chip => `<span class="chip">${chip}</span>`).join('')}
-        </div>
-        <div class="feature-grid">
-          ${section.features.map(item => `
-            <div class="mini-panel">
-              <strong>${item.title}</strong>
-              <span>${item.text}</span>
-            </div>
-          `).join('')}
         </div>
       `;
 
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       button.classList.add('active');
     }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('show');
-      });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        document.getElementById('loader').classList.add('hide');
-      }, 700);
-    });
   </script>
 </body>
 </html>
