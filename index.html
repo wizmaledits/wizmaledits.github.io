@@ -3,140 +3,189 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#090814" />
-  <title>WIZMALEDITS Dashboard</title>
+  <meta name="theme-color" content="#090612" />
+  <title>WIZMALEDITS</title>
   <style>
     :root {
-      --bg: #06040f;
-      --bg-2: #0b0718;
-      --panel: rgba(20, 12, 35, 0.88);
-      --panel-soft: rgba(28, 16, 48, 0.82);
-      --line: rgba(181, 92, 255, 0.28);
-      --line-soft: rgba(255, 255, 255, 0.08);
+      --bg: #070510;
+      --bg2: #0b0817;
+      --panel: rgba(18, 12, 34, 0.84);
+      --panel2: rgba(25, 16, 46, 0.92);
+      --line: rgba(178, 98, 255, 0.22);
+      --line2: rgba(255, 255, 255, 0.08);
       --text: #ffffff;
-      --muted: #bdaedc;
-      --pink: #ff4edb;
-      --purple: #9a4dff;
-      --purple-2: #7a2fff;
-      --cyan: #14f1c2;
-      --danger: #ff6b91;
-      --shadow: 0 18px 50px rgba(0,0,0,0.35);
-      --sidebar: 232px;
+      --muted: #bcaed9;
+      --soft: #8f80af;
+      --pink: #ff4fd8;
+      --purple: #9b4dff;
+      --cyan: #23f0c7;
+      --blue: #6ca6ff;
+      --shadow: 0 20px 60px rgba(0,0,0,.38);
+      --radius-xl: 26px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --sidebar-w: 250px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; }
     html { scroll-behavior: smooth; }
-
     body {
       min-height: 100vh;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(154,77,255,0.18), transparent 22%),
-        radial-gradient(circle at top right, rgba(255,78,219,0.12), transparent 20%),
-        linear-gradient(135deg, var(--bg) 0%, #090614 45%, #05030c 100%);
+        radial-gradient(circle at 18% 16%, rgba(155,77,255,.16), transparent 18%),
+        radial-gradient(circle at 84% 14%, rgba(255,79,216,.10), transparent 16%),
+        radial-gradient(circle at 70% 72%, rgba(35,240,199,.08), transparent 20%),
+        linear-gradient(135deg, var(--bg) 0%, #090614 52%, var(--bg2) 100%);
       overflow-x: hidden;
+      position: relative;
     }
 
-    body::before {
+    body::before,
+    body::after {
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
+      z-index: -3;
+    }
+
+    body::before {
       background-image:
-        radial-gradient(circle at 12% 22%, rgba(255,255,255,0.75) 0 1px, transparent 3px),
-        radial-gradient(circle at 78% 18%, rgba(255,255,255,0.55) 0 1px, transparent 3px),
-        radial-gradient(circle at 66% 68%, rgba(255,255,255,0.55) 0 1px, transparent 3px),
-        radial-gradient(circle at 18% 80%, rgba(255,255,255,0.4) 0 1px, transparent 3px);
+        radial-gradient(circle at 12% 20%, rgba(255,255,255,.9) 0 1px, transparent 3px),
+        radial-gradient(circle at 28% 74%, rgba(255,255,255,.55) 0 1px, transparent 3px),
+        radial-gradient(circle at 52% 34%, rgba(255,255,255,.55) 0 1px, transparent 3px),
+        radial-gradient(circle at 78% 62%, rgba(255,255,255,.5) 0 1px, transparent 3px),
+        radial-gradient(circle at 88% 24%, rgba(255,255,255,.65) 0 1px, transparent 3px);
       background-size: 280px 280px;
-      opacity: 0.25;
-      z-index: -2;
+      opacity: .28;
+      animation: twinkle 6s linear infinite;
+    }
+
+    body::after {
+      background:
+        radial-gradient(circle at left bottom, rgba(255,79,216,.12), transparent 25%),
+        radial-gradient(circle at right top, rgba(108,166,255,.10), transparent 22%);
+      filter: blur(40px);
+      opacity: .8;
     }
 
     .app {
       min-height: 100vh;
       display: grid;
-      grid-template-columns: var(--sidebar) 1fr;
+      grid-template-columns: var(--sidebar-w) 1fr;
     }
 
     .sidebar {
-      background: linear-gradient(180deg, rgba(5,3,13,0.96), rgba(10,6,22,0.98));
-      border-right: 1px solid rgba(154,77,255,0.24);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
       position: sticky;
       top: 0;
       height: 100vh;
+      background: linear-gradient(180deg, rgba(5,3,12,.98), rgba(10,7,20,.98));
+      border-right: 1px solid rgba(155,77,255,.18);
+      display: flex;
+      flex-direction: column;
+      z-index: 5;
+    }
+
+    .side-top {
+      padding: 22px 18px;
+      border-bottom: 1px solid rgba(155,77,255,.18);
     }
 
     .brand {
-      padding: 26px 18px;
-      border-bottom: 1px solid rgba(154,77,255,0.2);
-      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
     }
 
-    .brand-logo {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 16px;
+    .brand-mark {
+      width: 50px;
+      height: 50px;
       border-radius: 16px;
-      background: linear-gradient(135deg, rgba(154,77,255,0.22), rgba(255,78,219,0.16));
-      border: 1px solid rgba(255,255,255,0.1);
+      background: linear-gradient(135deg, rgba(155,77,255,.28), rgba(255,79,216,.16));
+      border: 1px solid rgba(255,255,255,.08);
       display: grid;
       place-items: center;
-      box-shadow: 0 0 24px rgba(154,77,255,0.18);
-      transform: rotate(-20deg);
+      box-shadow: 0 0 24px rgba(155,77,255,.18);
+      transform: rotate(-16deg);
+      position: relative;
+      overflow: hidden;
     }
 
-    .brand-logo span {
+    .brand-mark::before {
+      content: "";
       width: 18px;
-      height: 6px;
-      background: linear-gradient(90deg, var(--pink), var(--purple));
+      height: 7px;
       border-radius: 999px;
-      transform: rotate(20deg);
-      display: block;
-      box-shadow: 0 0 12px rgba(255,78,219,0.5);
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      transform: rotate(16deg);
+      box-shadow: 0 0 14px rgba(255,79,216,.5);
     }
 
-    .brand h1 {
-      font-size: 2rem;
-      letter-spacing: 2px;
-      color: var(--pink);
-      margin-bottom: 8px;
+    .brand-copy h1 {
+      font-size: 1.6rem;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
+      color: #f48bff;
+      margin-bottom: 5px;
     }
 
-    .brand p {
-      color: #a98ad9;
-      letter-spacing: 3px;
-      font-size: 0.78rem;
+    .brand-copy p {
+      color: var(--soft);
       text-transform: uppercase;
+      letter-spacing: 2.4px;
+      font-size: .72rem;
     }
 
-    .side-btn {
-      margin: 14px 14px 0;
-      padding: 14px 18px;
+    .discord-btn,
+    .chip-btn,
+    .hero-btn,
+    .tab,
+    .footer-btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .discord-btn::before,
+    .chip-btn::before,
+    .hero-btn::before,
+    .tab::before,
+    .footer-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 120%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+      transition: left .55s ease;
+      pointer-events: none;
+    }
+
+    .discord-btn:hover::before,
+    .chip-btn:hover::before,
+    .hero-btn:hover::before,
+    .tab:hover::before,
+    .footer-btn:hover::before { left: 120%; }
+
+    .discord-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      border-radius: 14px;
       text-decoration: none;
       color: white;
-      background: linear-gradient(90deg, rgba(133,54,224,0.35), rgba(255,78,219,0.16));
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 0 16px rgba(154,77,255,0.12);
+      background: linear-gradient(90deg, rgba(112,53,212,.34), rgba(255,79,216,.16));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 16px;
+      padding: 14px 16px;
       font-weight: 700;
+      box-shadow: 0 0 16px rgba(155,77,255,.14);
     }
 
     .nav {
-      padding: 16px 8px 8px;
+      padding: 16px 10px;
       display: grid;
       gap: 8px;
       flex: 1;
@@ -147,20 +196,20 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 14px 16px;
+      padding: 14px 14px;
       border-radius: 16px;
-      color: var(--muted);
       text-decoration: none;
-      transition: 0.22s ease;
+      color: var(--muted);
+      transition: .22s ease;
       border: 1px solid transparent;
     }
 
     .nav-item:hover,
     .nav-item.active {
       color: white;
-      background: linear-gradient(90deg, rgba(154,77,255,0.2), rgba(255,78,219,0.1));
-      border-color: rgba(255,255,255,0.08);
-      box-shadow: inset 0 0 0 1px rgba(154,77,255,0.16), 0 0 16px rgba(154,77,255,0.08);
+      background: linear-gradient(90deg, rgba(155,77,255,.18), rgba(255,79,216,.08));
+      border-color: rgba(255,255,255,.06);
+      box-shadow: inset 0 0 0 1px rgba(155,77,255,.14), 0 0 16px rgba(155,77,255,.06);
     }
 
     .nav-left {
@@ -170,156 +219,161 @@
       min-width: 0;
     }
 
-    .nav-icon {
+    .nav-ico {
       width: 22px;
       text-align: center;
-      color: #c998ff;
+      color: #d5a7ff;
       font-size: 1rem;
+      flex: 0 0 auto;
     }
 
     .nav-badge {
       min-width: 24px;
-      padding: 3px 8px;
+      padding: 3px 7px;
       border-radius: 999px;
-      background: linear-gradient(90deg, rgba(154,77,255,0.7), rgba(255,78,219,0.7));
+      font-size: .72rem;
+      background: linear-gradient(90deg, rgba(155,77,255,.85), rgba(255,79,216,.85));
       color: white;
-      font-size: 0.75rem;
       text-align: center;
       font-weight: 700;
     }
 
-    .sidebar-footer {
-      border-top: 1px solid rgba(154,77,255,0.2);
+    .side-bottom {
+      border-top: 1px solid rgba(155,77,255,.18);
       padding: 18px 14px;
       text-align: center;
     }
 
-    .sidebar-footer strong {
+    .side-bottom strong {
       display: block;
       color: var(--pink);
       font-size: 1.8rem;
       margin-bottom: 4px;
     }
 
-    .sidebar-footer span {
-      color: #8f7ab8;
+    .side-bottom span {
+      color: var(--soft);
       text-transform: uppercase;
       letter-spacing: 2px;
-      font-size: 0.72rem;
+      font-size: .72rem;
     }
 
     .main {
-      padding: 26px 24px 110px;
+      padding: 22px 22px 110px;
+    }
+
+    .topbar,
+    .hero,
+    .stat-card,
+    .section-shell,
+    .action-card,
+    .footer-bar {
+      background: linear-gradient(180deg, rgba(22,14,39,.92), rgba(12,8,24,.95));
+      border: 1px solid rgba(155,77,255,.18);
+      box-shadow: var(--shadow);
     }
 
     .topbar {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 16px;
-      margin-bottom: 24px;
       padding: 16px 18px;
-      border-radius: 22px;
-      background: linear-gradient(90deg, rgba(24,11,39,0.9), rgba(33,14,53,0.86));
-      border: 1px solid rgba(154,77,255,0.24);
-      box-shadow: var(--shadow);
+      border-radius: var(--radius-xl);
+      margin-bottom: 20px;
     }
 
     .top-left {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
     }
 
-    .topbar h2 {
-      font-size: 2.1rem;
+    .top-left h2 {
+      font-size: 2rem;
     }
 
-    .device-pill,
-    .status-pill {
+    .chip-btn {
       padding: 10px 14px;
       border-radius: 14px;
-      border: 1px solid rgba(154,77,255,0.28);
-      background: rgba(255,255,255,0.03);
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(155,77,255,.22);
       color: var(--muted);
-      font-size: 0.92rem;
+      font-size: .92rem;
+      text-decoration: none;
     }
 
-    .device-pill strong {
-      color: var(--pink);
-    }
+    .chip-btn strong { color: var(--pink); }
 
-    .status-area {
+    .top-right {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
       justify-content: flex-end;
     }
 
-    .metric-pill {
+    .status-box {
+      min-width: 148px;
       padding: 12px 16px;
       border-radius: 16px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(154,77,255,0.26);
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(155,77,255,.18);
       color: var(--muted);
-      min-width: 142px;
       text-align: center;
     }
 
-    .metric-pill strong {
+    .status-box strong {
       display: block;
       color: white;
       margin-top: 4px;
-      font-size: 0.95rem;
+      font-size: .95rem;
     }
 
-    .metric-pill.optimized strong {
-      color: #b9ffda;
-    }
+    .status-box.live strong { color: #baffdc; }
 
-    .hero-card,
-    .card,
-    .quick-card,
-    .section-card {
-      background: linear-gradient(180deg, rgba(27,13,44,0.92), rgba(14,8,26,0.94));
-      border: 1px solid rgba(154,77,255,0.24);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-    }
-
-    .hero-card {
-      padding: 28px 28px;
+    .hero {
+      border-radius: var(--radius-xl);
+      padding: 28px;
       display: flex;
       justify-content: space-between;
-      gap: 18px;
       align-items: center;
-      margin-bottom: 24px;
+      gap: 18px;
+      margin-bottom: 20px;
       position: relative;
       overflow: hidden;
+      isolation: isolate;
     }
 
-    .hero-card::before {
+    .hero::before {
       content: "";
       position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 100%;
-      background: linear-gradient(90deg, rgba(255,78,219,0.06), transparent 55%);
+      inset: 0;
+      background: linear-gradient(90deg, rgba(255,79,216,.06), transparent 52%, rgba(108,166,255,.05));
       pointer-events: none;
     }
 
-    .hero-copy h3 {
-      font-size: 3rem;
-      margin-bottom: 12px;
+    .hero-copy { position: relative; z-index: 1; }
+
+    .eyebrow {
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      font-size: .78rem;
+      margin-bottom: 10px;
     }
 
-    .hero-copy p {
+    .hero h3 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 12px;
+      line-height: .98;
+    }
+
+    .hero p {
       color: var(--muted);
       line-height: 1.7;
-      font-size: 1.05rem;
-      max-width: 680px;
+      max-width: 720px;
+      font-size: 1rem;
     }
 
     .hero-actions {
@@ -327,431 +381,440 @@
       gap: 12px;
       flex-wrap: wrap;
       justify-content: flex-end;
+      position: relative;
+      z-index: 1;
     }
 
-    .btn {
+    .hero-btn {
       text-decoration: none;
       color: white;
       padding: 16px 22px;
+      min-width: 190px;
       border-radius: 16px;
       font-weight: 700;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: 0.22s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 190px;
-      justify-content: center;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.08);
+      transition: .22s ease;
     }
 
-    .btn:hover { transform: translateY(-2px); }
-
-    .btn.primary {
-      background: linear-gradient(90deg, #8a35ff, #ff4edb);
-      box-shadow: 0 0 24px rgba(255,78,219,0.22);
+    .hero-btn:hover { transform: translateY(-2px); }
+    .hero-btn.primary {
+      background: linear-gradient(90deg, #8f3cff, #ff4fd8);
+      box-shadow: 0 0 24px rgba(255,79,216,.22);
     }
-
-    .btn.secondary {
-      background: rgba(255,255,255,0.03);
-    }
+    .hero-btn.secondary { background: rgba(255,255,255,.03); }
 
     .section-title {
       display: flex;
       align-items: center;
       gap: 12px;
-      margin: 14px 0 18px;
-      font-size: 1.8rem;
+      font-size: 1.55rem;
       font-weight: 800;
+      margin: 10px 0 16px;
     }
 
     .section-title::before {
       content: "";
       width: 6px;
-      height: 30px;
+      height: 28px;
       border-radius: 999px;
       background: linear-gradient(180deg, var(--purple), var(--pink));
-      box-shadow: 0 0 14px rgba(255,78,219,0.35);
+      box-shadow: 0 0 16px rgba(255,79,216,.34);
     }
 
-    .grid-4 {
+    .grid-4,
+    .grid-3,
+    .action-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 18px;
     }
 
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-      margin-top: 18px;
-    }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; }
+    .action-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
-    .card {
+    .stat-card {
+      border-radius: 22px;
       padding: 20px;
-      min-height: 150px;
+      min-height: 158px;
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
     }
 
-    .hardware-head {
+    .stat-card:hover,
+    .action-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 18px rgba(155,77,255,.12);
+      border-color: rgba(255,255,255,.08);
+    }
+
+    .stat-head {
       display: flex;
       align-items: flex-start;
       gap: 14px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
-    .hardware-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(154,77,255,0.35), rgba(255,78,219,0.2));
+    .stat-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
       display: grid;
       place-items: center;
-      color: #f4ddff;
-      font-size: 1.4rem;
+      background: linear-gradient(135deg, rgba(155,77,255,.32), rgba(255,79,216,.16));
+      color: #f7deff;
+      font-size: 1.3rem;
       flex: 0 0 auto;
     }
 
-    .hardware-label {
-      color: #9b8ab7;
+    .mini-label {
+      color: var(--soft);
       text-transform: uppercase;
       letter-spacing: 1px;
-      font-size: 0.86rem;
+      font-size: .82rem;
       margin-bottom: 6px;
     }
 
-    .card h4 {
-      font-size: 1.45rem;
+    .stat-card h4 {
+      font-size: 1.25rem;
       margin-bottom: 8px;
     }
 
-    .card p,
-    .card span {
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    .stat-card p,
+    .stat-card span { color: var(--muted); line-height: 1.55; }
 
-    .live-stat {
-      color: var(--cyan);
+    .live-line {
       margin-top: 10px;
-      font-size: 0.96rem;
+      color: var(--cyan);
+      font-size: .95rem;
     }
 
-    .quick-wrap {
+    .metric-value {
+      font-size: 2.8rem;
+      color: var(--purple);
+      font-weight: 800;
+      line-height: 1;
+      margin: 12px 0 10px;
+    }
+
+    .section-shell {
+      border-radius: 24px;
+      padding: 18px;
       margin-top: 24px;
     }
 
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .quick-card {
-      padding: 24px 18px;
+    .action-card {
+      border-radius: 20px;
+      padding: 22px 18px;
       min-height: 150px;
+      background: linear-gradient(180deg, rgba(29,14,46,.9), rgba(15,9,28,.94));
+      border: 1px solid rgba(155,77,255,.18);
       display: grid;
       place-items: center;
       text-align: center;
       position: relative;
       overflow: hidden;
-      transition: 0.22s ease;
+      transition: .22s ease;
     }
 
-    .quick-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 18px rgba(154,77,255,0.14);
-    }
-
-    .quick-card::before {
+    .action-card::before {
       content: "";
       position: absolute;
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: rgba(255,78,219,0.5);
+      background: rgba(255,79,216,.48);
       left: 14px;
       top: 22px;
-      box-shadow: 210px 12px 0 rgba(154,77,255,0.45), 32px 108px 0 rgba(255,78,219,0.42);
+      box-shadow: 210px 14px 0 rgba(155,77,255,.42), 40px 104px 0 rgba(255,79,216,.34);
     }
 
-    .quick-icon {
+    .action-icon {
       font-size: 2rem;
-      color: var(--pink);
       margin-bottom: 16px;
+      color: var(--pink);
     }
 
-    .quick-card h5 {
-      font-size: 1.25rem;
+    .action-card h5 {
+      font-size: 1.15rem;
       margin-bottom: 6px;
     }
 
-    .quick-card p {
+    .action-card p {
       color: var(--muted);
-      line-height: 1.5;
-      font-size: 0.92rem;
+      line-height: 1.55;
+      font-size: .92rem;
+      max-width: 220px;
     }
 
-    .bottom-bar {
+    .footer-bar {
       position: fixed;
-      left: var(--sidebar);
+      left: var(--sidebar-w);
       right: 0;
       bottom: 0;
-      background: rgba(8,6,18,0.98);
-      border-top: 1px solid rgba(154,77,255,0.22);
-      padding: 16px 24px;
+      padding: 16px 22px;
+      border-top: 1px solid rgba(155,77,255,.18);
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      z-index: 20;
-      box-shadow: 0 -10px 30px rgba(0,0,0,0.28);
+      z-index: 10;
+      background: rgba(8,6,18,.98);
     }
 
-    .bottom-copy {
+    .footer-copy {
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: .94rem;
     }
 
-    .bottom-copy strong {
-      color: var(--pink);
-    }
+    .footer-copy strong { color: var(--pink); }
 
-    .bottom-actions {
+    .footer-actions {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
     }
 
-    .small-btn {
+    .footer-btn {
       text-decoration: none;
       color: white;
       padding: 14px 20px;
+      min-width: 158px;
       border-radius: 16px;
-      font-weight: 700;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: 0.22s ease;
-      min-width: 156px;
       text-align: center;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,.08);
+      transition: .22s ease;
     }
 
-    .small-btn:hover { transform: translateY(-2px); }
-
-    .small-btn.secondary { background: rgba(255,255,255,0.03); }
-    .small-btn.primary {
-      background: linear-gradient(90deg, #8a35ff, #ff4edb);
-      box-shadow: 0 0 18px rgba(255,78,219,0.18);
+    .footer-btn:hover { transform: translateY(-2px); }
+    .footer-btn.secondary { background: rgba(255,255,255,.03); }
+    .footer-btn.primary {
+      background: linear-gradient(90deg, #8f3cff, #ff4fd8);
+      box-shadow: 0 0 18px rgba(255,79,216,.16);
     }
 
-    @media (max-width: 1200px) {
-      .grid-4, .quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .hero-card { flex-direction: column; align-items: flex-start; }
+    @keyframes twinkle { 0%,100%{opacity:.28;} 50%{opacity:.5;} }
+
+    @media (max-width: 1240px) {
+      .grid-4,
+      .action-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .grid-3 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .hero { flex-direction: column; align-items: flex-start; }
       .hero-actions { justify-content: flex-start; }
     }
 
-    @media (max-width: 920px) {
+    @media (max-width: 980px) {
       .app { grid-template-columns: 1fr; }
       .sidebar {
         position: relative;
         height: auto;
         min-height: unset;
       }
-      .bottom-bar {
-        left: 0;
+      .footer-bar {
         position: static;
+        left: 0;
         margin-top: 24px;
         border-radius: 22px;
       }
       .main { padding-bottom: 24px; }
       .topbar { flex-direction: column; align-items: flex-start; }
-      .status-area { justify-content: flex-start; }
+      .top-right { justify-content: flex-start; }
     }
 
     @media (max-width: 680px) {
       .main { padding: 16px 14px 24px; }
-      .brand h1 { font-size: 1.6rem; }
-      .topbar h2 { font-size: 1.6rem; }
-      .hero-copy h3 { font-size: 2.1rem; }
-      .grid-4, .grid-3, .quick-grid { grid-template-columns: 1fr; }
-      .bottom-bar { flex-direction: column; align-items: stretch; }
-      .bottom-actions { width: 100%; }
-      .small-btn, .btn { width: 100%; }
-      .hero-actions { width: 100%; }
+      .top-left h2 { font-size: 1.55rem; }
+      .hero h3 { font-size: 2rem; }
+      .grid-4,
+      .grid-3,
+      .action-grid { grid-template-columns: 1fr; }
+      .hero-actions,
+      .footer-actions { width: 100%; }
+      .hero-btn,
+      .footer-btn,
+      .chip-btn { width: 100%; }
+      .footer-bar { flex-direction: column; align-items: stretch; }
+      .brand-copy h1 { font-size: 1.35rem; }
     }
   </style>
 </head>
 <body>
   <div class="app">
     <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-logo"><span></span></div>
-        <h1>WIZMALEDITS</h1>
-        <p>zero delay</p>
+      <div class="side-top">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-copy">
+            <h1>WIZMALEDITS</h1>
+            <p>edit control</p>
+          </div>
+        </div>
+        <a class="discord-btn" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">💬 Join Discord</a>
       </div>
 
-      <a class="side-btn" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">💬 Join Discord</a>
-
       <nav class="nav">
-        <a class="nav-item active" href="#">
-          <div class="nav-left"><div class="nav-icon">⌂</div><span>Dashboard</span></div>
+        <a class="nav-item active" href="#dashboard">
+          <div class="nav-left"><div class="nav-ico">⌂</div><span>Dashboard</span></div>
         </a>
         <a class="nav-item" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">
-          <div class="nav-left"><div class="nav-icon">⚡</div><span>TikTok</span></div>
+          <div class="nav-left"><div class="nav-ico">⚡</div><span>TikTok</span></div>
           <div class="nav-badge">8</div>
         </a>
         <a class="nav-item" href="#overview">
-          <div class="nav-left"><div class="nav-icon">▣</div><span>Rendering</span></div>
+          <div class="nav-left"><div class="nav-ico">▣</div><span>Overview</span></div>
           <div class="nav-badge">10</div>
         </a>
-        <a class="nav-item" href="#status">
-          <div class="nav-left"><div class="nav-icon">✸</div><span>Memory</span></div>
+        <a class="nav-item" href="#stats">
+          <div class="nav-left"><div class="nav-ico">✸</div><span>Stats</span></div>
           <div class="nav-badge">10</div>
         </a>
-        <a class="nav-item" href="#quick">
-          <div class="nav-left"><div class="nav-icon">◔</div><span>Extreme</span></div>
+        <a class="nav-item" href="#actions">
+          <div class="nav-left"><div class="nav-ico">◔</div><span>Actions</span></div>
           <div class="nav-badge">13</div>
         </a>
         <a class="nav-item" href="#about">
-          <div class="nav-left"><div class="nav-icon">ⓘ</div><span>About</span></div>
+          <div class="nav-left"><div class="nav-ico">ⓘ</div><span>About</span></div>
         </a>
       </nav>
 
-      <div class="sidebar-footer">
+      <div class="side-bottom">
         <strong>30</strong>
         <span>active</span>
       </div>
     </aside>
 
-    <main class="main">
+    <main class="main" id="dashboard">
       <div class="topbar">
         <div class="top-left">
           <h2>Dashboard</h2>
-          <div class="device-pill">Mouse: <strong>Unknown Mouse</strong> &nbsp; Max: <strong>1000Hz</strong></div>
+          <div class="chip-btn">Profile: <strong>WIZMALEDITS</strong> &nbsp; Max: <strong>1000Hz</strong></div>
         </div>
-        <div class="status-area">
-          <div class="metric-pill">System Latency<strong>Low</strong></div>
-          <div class="metric-pill optimized">Status<strong>Optimized</strong></div>
+        <div class="top-right">
+          <div class="status-box">System Latency<strong>Low</strong></div>
+          <div class="status-box live">Status<strong>Optimized</strong></div>
         </div>
       </div>
 
-      <section class="hero-card">
+      <section class="hero">
         <div class="hero-copy">
+          <div class="eyebrow">creator control center</div>
           <h3>Welcome to WIZMALEDITS</h3>
-          <p>Optimize your creator page for maximum anime edit energy with a cleaner purple dashboard UI, premium sections, smoother spacing, and stronger visual polish inspired by the layout you sent.</p>
+          <p>Not a copy of the app you showed — just the same level of clean, dark, premium dashboard energy. This version is redesigned specifically for your anime edit brand with stronger glow, better layout balance, smoother cards, and a much better PC look while still working cleanly on mobile.</p>
         </div>
         <div class="hero-actions">
-          <a class="btn primary" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">✈ Apply All Tweaks</a>
-          <a class="btn secondary" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">▥ Run Benchmark</a>
+          <a class="hero-btn primary" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">✈ Open TikTok</a>
+          <a class="hero-btn secondary" href="https://discord.gg/X2f7HmA3Wv" target="_blank" rel="noopener noreferrer">▥ Join Community</a>
         </div>
       </section>
 
-      <div class="section-title" id="overview">Hardware Overview</div>
+      <div class="section-title" id="overview">Creator Overview</div>
       <section class="grid-4">
-        <div class="card">
-          <div class="hardware-head">
-            <div class="hardware-icon">◉</div>
+        <div class="stat-card">
+          <div class="stat-head">
+            <div class="stat-icon">◉</div>
             <div>
-              <div class="hardware-label">Mouse</div>
+              <div class="mini-label">Profile</div>
               <h4>Unknown Mouse</h4>
             </div>
           </div>
-          <span>1000Hz Max</span>
-          <div class="live-stat">● Ready</div>
+          <span>Main creator profile loaded.</span>
+          <div class="live-line">● 1000Hz Max</div>
         </div>
 
-        <div class="card">
-          <div class="hardware-head">
-            <div class="hardware-icon">▣</div>
+        <div class="stat-card">
+          <div class="stat-head">
+            <div class="stat-icon">▣</div>
             <div>
-              <div class="hardware-label">Graphics</div>
-              <h4>Anime GPU Vibes</h4>
+              <div class="mini-label">Graphics</div>
+              <h4>Anime Visuals</h4>
             </div>
           </div>
-          <span>Scanning style...</span>
-          <div class="live-stat">● Synced</div>
+          <span>Scanning clean transitions and style.</span>
+          <div class="live-line">● Synced</div>
         </div>
 
-        <div class="card">
-          <div class="hardware-head">
-            <div class="hardware-icon">✸</div>
+        <div class="stat-card">
+          <div class="stat-head">
+            <div class="stat-icon">✸</div>
             <div>
-              <div class="hardware-label">Processor</div>
-              <h4>Creator CPU</h4>
+              <div class="mini-label">Processor</div>
+              <h4>Creator Engine</h4>
             </div>
           </div>
-          <span>Visual engine online</span>
-          <div class="live-stat">● Stable</div>
+          <span>Dark dashboard theme online.</span>
+          <div class="live-line">● Stable</div>
         </div>
 
-        <div class="card">
-          <div class="hardware-head">
-            <div class="hardware-icon">▤</div>
+        <div class="stat-card">
+          <div class="stat-head">
+            <div class="stat-icon">▤</div>
             <div>
-              <div class="hardware-label">Memory</div>
+              <div class="mini-label">Memory</div>
               <h4>System Memory</h4>
             </div>
           </div>
-          <span>Galaxy theme loaded</span>
-          <div class="live-stat">● Smooth</div>
+          <span>Galaxy glow and cards active.</span>
+          <div class="live-line">● Smooth</div>
         </div>
       </section>
 
-      <section class="grid-3" id="status">
-        <div class="card">
-          <div class="hardware-label">Active Tweaks</div>
-          <h4 style="font-size:3rem;color:var(--purple);">30</h4>
-          <div class="live-stat">Ready to optimize</div>
+      <section class="grid-3" id="stats">
+        <div class="stat-card">
+          <div class="mini-label">Active Tweaks</div>
+          <div class="metric-value">30</div>
+          <div class="live-line">Ready to optimize</div>
         </div>
-        <div class="card">
-          <div class="hardware-label">System Status</div>
-          <h4 style="color:var(--pink);">Optimized</h4>
-          <div class="live-stat">Awaiting activation</div>
+        <div class="stat-card">
+          <div class="mini-label">System Status</div>
+          <h4 style="color:var(--pink); margin-top:14px; font-size:2rem;">Optimized</h4>
+          <div class="live-line">Awaiting activation</div>
         </div>
-        <div class="card">
-          <div class="hardware-label">Performance</div>
-          <h4 style="font-size:3rem;color:var(--purple);">150%</h4>
-          <div class="live-stat">+60% boost</div>
+        <div class="stat-card">
+          <div class="mini-label">Performance</div>
+          <div class="metric-value">150%</div>
+          <div class="live-line">+60% boost</div>
         </div>
       </section>
 
-      <div class="quick-wrap" id="quick">
+      <div class="section-shell" id="actions">
         <div class="section-title">Quick Actions</div>
-        <div class="quick-grid">
-          <div class="quick-card">
+        <div class="action-grid">
+          <div class="action-card">
             <div>
-              <div class="quick-icon">✈</div>
+              <div class="action-icon">✈</div>
               <h5>Apply All</h5>
-              <p>Push the full WIZMALEDITS creator dashboard style instantly.</p>
+              <p>Push the full WIZMALEDITS dashboard styling and creator energy.</p>
             </div>
           </div>
-          <div class="quick-card">
+          <div class="action-card">
             <div>
-              <div class="quick-icon">↻</div>
+              <div class="action-icon">↻</div>
               <h5>Reset All</h5>
-              <p>Go back and rebuild your layout anytime.</p>
+              <p>Clear changes and rebuild the vibe from scratch.</p>
             </div>
           </div>
-          <div class="quick-card">
+          <div class="action-card">
             <div>
-              <div class="quick-icon">◫</div>
+              <div class="action-icon">◫</div>
               <h5>Restore Point</h5>
-              <p>Keep your design safe before changing more sections.</p>
+              <p>Keep your design safe before trying new layout ideas.</p>
             </div>
           </div>
-          <div class="quick-card">
+          <div class="action-card">
             <div>
-              <div class="quick-icon">‼</div>
-              <h5>Measure Latency</h5>
-              <p>Track how smooth and polished the interface feels.</p>
+              <div class="action-icon">‼</div>
+              <h5>Measure Flow</h5>
+              <p>Track how smooth, clean, and premium the page feels.</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="bottom-bar" id="about">
-        <div class="bottom-copy">Status: <strong>Optimized</strong> | Active: <strong>30</strong> tweaks</div>
-        <div class="bottom-actions">
-          <a class="small-btn secondary" href="#">↻ Reset All</a>
-          <a class="small-btn primary" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">✓ Apply Changes</a>
+      <div class="footer-bar" id="about">
+        <div class="footer-copy">Status: <strong>Optimized</strong> | Active: <strong>30</strong> tweaks</div>
+        <div class="footer-actions">
+          <a class="footer-btn secondary" href="#dashboard">↻ Reset View</a>
+          <a class="footer-btn primary" href="https://www.tiktok.com/@wizmaledits" target="_blank" rel="noopener noreferrer">✓ Apply Changes</a>
         </div>
       </div>
     </main>
